@@ -1,6 +1,5 @@
 ## Orkiv Inventory JS plugin
-
-![enter image description here](https://www.orkiv.com/images/inventory.png)
+![enter image description here](http://www.devpointlabs.com/assets/javascript/javascript-icon-59b52f096f36f476bbdfac982a25240583d483b1157b76771e59077025f62d38.png)  ![enter image description here](https://www.orkiv.com/images/inventory.png)
 
 ### Setup
 
