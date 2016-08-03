@@ -304,7 +304,7 @@ function bindTagsInv(){
 
 
 function hideInventoryModal(){
-	 var x = document.getElementsByClassName("to-fade");
+	 var x = document.getElementsByClassName("inv-to-fade");
 							      x[0].className = x[0].className.replace("faded","");
 							  	  x[1].className = x[1].className.replace("faded","");
 							  	  $inventoryStandard.modal = false;
@@ -701,7 +701,7 @@ Inventory.prototype.ShowCart = function(){
 Inventory.prototype.showModal = function(){
 	if(!this.modal){
 			if(document.getElementsByClassName("inventory-alert").length == 0){
-		var x = document.getElementsByClassName("to-fade");
+		var x = document.getElementsByClassName("inv-to-fade");
       x[0].className += " faded";
   	  x[1].className+= " faded";	
   	  this.modal = true;
@@ -712,7 +712,7 @@ Inventory.prototype.showModal = function(){
 Inventory.prototype.hideModal = function(){
 		
 
-  	  	 var x = document.getElementsByClassName("to-fade");
+  	  	 var x = document.getElementsByClassName("inv-to-fade");
       x[0].className = x[0].className.replace("faded","");
   	  x[1].className = x[1].className.replace("faded","");
   	  this.modal = false;
