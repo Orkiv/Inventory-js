@@ -112,6 +112,7 @@ Within your item or service viewer in the Inventory dashboard, you will also see
 
 ### Add to cart
 Adds the specified item to the current user's cart.
+
 ![enter image description here](https://www.orkiv.com/i/js-res/1.png) 
 
 	<button onclick="$inventoryStandard.Cart('itemid',1,['variations'])" data-id="itemid" data-link="cart" class="sync-orkivinv sync-dynamic" ><i class="fa fa-shopping-cart"></i> Add to cart</button>
@@ -119,18 +120,24 @@ Adds the specified item to the current user's cart.
 
 ### Buy 
 Opens a checkout window for the specified item.
+
+
 ![enter image description here](https://www.orkiv.com/i/js-res/2.png)
 
 	<button onclick="$inventoryStandard.Buy('itemid',1,['variations'])" data-id="itemid"  class="sync-orkivinv" ><i class="fa fa-credit-card"></i> Buy</button>
 
 ### Checkout
 Opens a checkout window for all of the items within the current user's cart.
+
+
 ![enter image description here](https://www.orkiv.com/i/js-res/7.png)
 
 	<button onclick="$inventoryStandard.Checkout()" class="sync-orkivinv" ><i class="fa fa-shopping-cart"></i> Buy</button>
 
 ### Wishlist
 Adds the specified item to the current user's Wishlist.
+
+
 ![enter image description here](https://www.orkiv.com/i/js-res/3.png) 
 
 	<button onclick="$inventoryStandard.Cart('itemid',['variations'])" data-id="itemid" data-link="cart" class="sync-orkivinv sync-dynamic" ><i class="fa fa-bars"></i> Wishlist</button>
@@ -138,6 +145,8 @@ Adds the specified item to the current user's Wishlist.
 
 ### Subscribe
 Subscribes the current user to the specified serviceID
+
+
 ![enter image description here](https://www.orkiv.com/i/js-res/6.png) 
 	
 	  <button onclick="$inventoryStandard.BuyService('serviceID')" class="sync-orkivinv" ><i class="fa fa-circle"></i> Subscribe</button>
@@ -149,6 +158,8 @@ Combo boxes come with explicit user defined quantity.
 
 #### Add to cart
 Sets the cart entry of this item to the specified amount by the user.
+
+
 ![enter image description here](https://www.orkiv.com/i/js-res/4.png) 
 
 	<div class="inventory-form-group" data-type="cart" data-id="itemid">
@@ -158,6 +169,8 @@ Sets the cart entry of this item to the specified amount by the user.
 
 #### Buy
 Opens a checkout window with the specified user quantity
+
+
 ![enter image description here](https://www.orkiv.com/i/js-res/5.png) 
 
 	
