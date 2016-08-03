@@ -3,7 +3,9 @@
 
 ### Setup
 
-Download this repository and move it to your website root. 
+Download this repository, unzip it and move it to your website root. 
+	
+	<script type="text/javascript" src="/your/path/inventory.min.js"></script>
 
 Or host this one on us :
 
