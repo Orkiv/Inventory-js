@@ -108,7 +108,7 @@ This will open a checkout modal with the current items within the current user's
 
 $inventory once initialized can be accessed via html elements. This enables quick manipulation of the current user's data without any additional JS.
 
-Within your item or service viewer you will also see a button with name snippet generator
+Within your item or service viewer in the Inventory dashboard, you will also see a button with name snippet generator
 
 ### Add to cart
 Adds the specified item to the current user's cart.
