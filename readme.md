@@ -1,6 +1,17 @@
 ## Orkiv Inventory JS plugin
 ![enter image description here](http://www.devpointlabs.com/assets/javascript/javascript-icon-59b52f096f36f476bbdfac982a25240583d483b1157b76771e59077025f62d38.png)  ![enter image description here](https://www.orkiv.com/images/inventory.png)
 
+## Navigation
+ 
+
+ 1. [Setup](#setup)
+ 2. [Initialization](#initialization)
+ 3. [Access cart](#cart)
+ 4. [Access Wishlist](#wishlist)
+ 5. [Performing checkout](#checkout)
+ 6. [HTML UI](#drop-in-ui)
+ 7. [Additional customization](#inventory-object)
+
 ### Setup
 
 Download this repository, unzip it and move it to your website root. 
