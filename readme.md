@@ -61,7 +61,7 @@ This will remove all items from the current user's cart.
 ### Wishlist Object
 Wishlist object is an entry of an item within a user's Wishlist.
 		
-	Cart Object { id : "itemid", 
+	Wishlist Object { id : "itemid", 
 	variations:['variation'] }
 
 
