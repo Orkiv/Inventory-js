@@ -14,7 +14,7 @@
 
 ### Setup
 
-Download this repository, unzip it and move it to your website root. 
+[Download](https://github.com/Orkiv/Inventory-js/archive/master.zip) this repository, unzip it and move it to your website root. 
 	
 	<script type="text/javascript" src="/your/path/inventory.min.js"></script>
 
