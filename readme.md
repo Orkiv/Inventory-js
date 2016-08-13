@@ -187,7 +187,7 @@ Opens a checkout window with the specified user quantity
 	
 	<div class="inventory-form-group" data-type="buy" data-id="itemid">
 	     <input min="0" type="number" data-isf="amt" placeholder="Amount" />
-	     <button onclick="$inventoryStandard.ExplicitCart('itemid',['variation'])" class="sync-orkivinv" ><i class="fa fa-shopping-cart"></i></button>
+	     <button onclick="$inventoryStandard.ExplicitBuy('itemid',['variation'])" class="sync-orkivinv" ><i class="fa fa-shopping-cart"></i></button>
 	</div>
 
 
