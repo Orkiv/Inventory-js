@@ -151,7 +151,7 @@ Adds the specified item to the current user's Wishlist.
 
 ![enter image description here](https://www.orkiv.com/i/js-res/3.png) 
 
-	<button onclick="$inventoryStandard.Cart('itemid',['variations'])" data-id="itemid" data-link="cart" class="sync-orkivinv sync-dynamic" ><i class="fa fa-bars"></i> Wishlist</button>
+	<button onclick="$inventoryStandard.Wishlist('itemid',['variations'])" data-id="itemid" data-link="cart" class="sync-orkivinv sync-dynamic" ><i class="fa fa-bars"></i> Wishlist</button>
 
 
 ### Subscribe
