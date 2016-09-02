@@ -658,7 +658,9 @@ Inventory.prototype.RemoveFromWishlist = function(itemid){
         }
 
         data.wishlist = newset;
-            
+          $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?recordwdrop=" + this.accountid + "&item=" + itemid.split("%^}")[0] + "&sessionid=" + window.localStorage.inventoryID, success:function(html){
+                    console.log("statlogef");
+                  } });
         this.Alert("Wishlist Updated!");
 
         this.saveLocal("inventoryData",data,true);
@@ -983,6 +985,9 @@ Inventory.prototype.Wishlist = function(itemid,variations) {
             if(!inalready){
                 this.Alert("Wishlist Updated!");
                 data.wishlist.push({id:itemid,variations:variations})
+                  $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?recordwadd=" + this.accountid + "&item=" + itemid.split("%^}")[0] + "&sessionid=" + window.localStorage.inventoryID, success:function(html){
+                    console.log("statlogef");
+                  } });
                     this.saveLocal("inventoryData",data,true);
             } else {
                 //this.Alert("item removed from withlist!");
