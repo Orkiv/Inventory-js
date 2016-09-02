@@ -137,13 +137,19 @@ Opens a checkout window for the specified item.
 
 	<button onclick="$inventoryStandard.Buy('itemid',1,['variations'])" data-id="itemid"  class="sync-orkivinv" ><i class="fa fa-credit-card"></i> Buy</button>
 
-### Checkout
-Opens a checkout window for all of the items within the current user's cart.
-
+### Checkout Cart
+Displays the checkout page without the user being able to update their cart.
 
 ![enter image description here](https://www.orkiv.com/i/js-res/7.png)
 
-	<button onclick="$inventoryStandard.Checkout()" class="sync-orkivinv" ><i class="fa fa-shopping-cart"></i> Buy</button>
+	<button onclick="$inventoryStandard.ShowCart()" class="sync-orkivinv" ><i class="fa fa-shopping-cart"></i> Checkout</button>
+
+### Checkout
+Opens the current user's cart.
+
+![enter image description here](https://www.orkiv.com/i/js-res/7.png)
+
+	<button onclick="$inventoryStandard.Checkout()" class="sync-orkivinv" ><i class="fa fa-shopping-cart"></i> Checkout</button>
 
 ### Wishlist
 Adds the specified item to the current user's Wishlist.
@@ -151,7 +157,7 @@ Adds the specified item to the current user's Wishlist.
 
 ![enter image description here](https://www.orkiv.com/i/js-res/3.png) 
 
-	<button onclick="$inventoryStandard.Wishlist('itemid',['variations'])" data-id="itemid" data-link="cart" class="sync-orkivinv sync-dynamic" ><i class="fa fa-bars"></i> Wishlist</button>
+	<button onclick="$inventoryStandard.Cart('itemid',['variations'])" data-id="itemid" data-link="cart" class="sync-orkivinv sync-dynamic" ><i class="fa fa-bars"></i> Wishlist</button>
 
 
 ### Subscribe
@@ -187,9 +193,25 @@ Opens a checkout window with the specified user quantity
 	
 	<div class="inventory-form-group" data-type="buy" data-id="itemid">
 	     <input min="0" type="number" data-isf="amt" placeholder="Amount" />
-	     <button onclick="$inventoryStandard.ExplicitBuy('itemid',['variation'])" class="sync-orkivinv" ><i class="fa fa-shopping-cart"></i></button>
+	     <button onclick="$inventoryStandard.ExplicitCart('itemid',['variation'])" class="sync-orkivinv" ><i class="fa fa-shopping-cart"></i></button>
 	</div>
 
+### Additional Drop in support
+
+### Display editable user cart
+
+	Inventory.prototype.Checkout()
+
+![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/cart.png)
+To display an editable view of your user's cart use the `Checkout` function.
+
+
+### Display editable user Wishlist 
+
+	Inventory.prototype.ShowWishlist()
+
+![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/wishlist.png)
+To display an editable view of your user's wish list use the `ShowWishlist` function.
 
 ## Inventory Object
 
@@ -206,10 +228,18 @@ Additional initializations :
 	</script>
 
 
-### $inventory.SetAlert(function(alerttext){ /* Your code */ })
+### Inventory.prototype.SetAlert(function(alerttext){ /* Your code */ })
 
 This will set a custom alert. Please make sure alerts is set to false.
 
-### $inventory.GenID(itemid,['variations'])
+### Inventory.prototype.GenID(itemid,['variations'])
 
 Generates a cart or wishlist id of the current itemid and variations supplied.
+
+### Inventory.prototype.ShowWishlist()
+
+To display an editable view of your user's wish list use the `ShowWishlist` function.
+
+### Inventory.prototype.Checkout()
+
+To display an editable view of your user's cart use the `ShowWishlist` function.
