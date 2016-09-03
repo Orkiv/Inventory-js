@@ -12,6 +12,10 @@
  6. [HTML UI](#drop-in-ui)
  7. [Additional customization](#inventory-object)
 
+### Requirements
+
+Inventory JS requires `jQuery 1.9+`
+
 ### Setup
 
 [Download](https://github.com/Orkiv/Inventory-js/archive/master.zip) this repository, unzip it and move it to your website root. 
