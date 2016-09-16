@@ -11,10 +11,19 @@
  5. [Performing checkout](#checkout)
  6. [HTML UI](#drop-in-ui)
  7. [Additional customization](#inventory-object)
+ 8. [User management](#user-management)
+
+### Updates
+
+ - User login support
+ - Wishlist Sharing
+ - Social media Sign in
+ 
 
 ### Requirements
 
 Inventory JS requires `jQuery 1.9+`
+
 
 ### Setup
 
@@ -247,3 +256,16 @@ To display an editable view of your user's wish list use the `ShowWishlist` func
 ### Inventory.prototype.Checkout()
 
 To display an editable view of your user's cart use the `ShowWishlist` function.
+
+## User management
+
+Inventory JS supports out of the box basic user authentication. It works with the parameters defined within Inventory to help you convert visitors to returning customers.
+
+### Inventory.prototype.CreateSocialSupport(string panel, array[ userinfo)
+
+	- panel attribute will specify which jQuery selector to append the login prompt to.
+	
+![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logprompt.png)
+	- userinfo is a string array of jQuery selectors to append logged in user information.
+
+![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logtab.png)
