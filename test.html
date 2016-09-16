@@ -45,6 +45,35 @@
     </div>
 
     <section class="jumbotron text-xs-center">
+      <div class="container inventory-realm extract">
+        <div classs="column one-half">
+          <h1><i class="fa fa-user"></i> Login</h1>
+          <div class="inventory-form-group" style="margin-bottom:10px;" >
+                  <input type="text" style="width: 260px;" name="email"  placeholder="Email">
+                   <span style="float:left;height:48px;border-radius:0;" class="sync-orkivinv">@</span>
+                </div>
+                <div class="inventory-form-group" style="margin-bottom:10px;" >
+                  <input type="password" name="password" style="width: 260px;"  placeholder="Password">
+                   <span style="float:left;height:48px;border-radius:0;" class="sync-orkivinv"><i class="fa fa-lock"></i></span>
+                </div>
+                <div class="additional-fields" style="display:none;">
+
+                </div>
+                <p><button class="init-email sync-orkivinv">Login</button></p>
+                <p><button class="init-signup sync-orkivinv">Join</button> <button class="init-passrecovery sync-orkivinv">Forgot password?</button></p>
+
+                <div class="social-prompts" style="text-align:center">
+                  <p>Login via a social media provider</p>
+
+                </div>
+                <div class="social-options" style="text-align:center">
+              
+                  <a href="" class="sync-orkivinv" target="_blank"><i class='fa fa-facebook'></i> Facebook </a>
+                </div>
+
+            </div>
+         
+      </div>
       <div class="container">
         <h1 class="jumbotron-heading">Album example</h1>
         <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
@@ -157,6 +186,7 @@
 
     $inventory = new Inventory("54ac00acc9fe6b2848791586","3d7f76ecf310afc8d01e89ebfbaed70f1f260c0b2fb68db36ad51f9f3f1e51e11beb91fe156c207bd5761b29ca5c12537cae32c632048191660ae98bfc8b2c9d-16283935501470134710",false);
     $inventory.SetAlert( function(text){alert(text)});
+    $inventory.CreateSocialSupport(".extract",[".navbar  .container-fluid"]);
     </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" width="356" height="280" viewBox="0 0 356 280" preserveAspectRatio="none" style="display: none; visibility: hidden; position: absolute; top: -100%; left: -100%;"><defs><style type="text/css"></style></defs><text x="0" y="18" style="font-weight:bold;font-size:18pt;font-family:Arial, Helvetica, Open Sans, sans-serif">356x280</text></svg></body></html>
