@@ -266,6 +266,7 @@ Inventory JS supports out of the box basic user authentication. It works with th
 	- panel attribute will specify which jQuery selector to append the login prompt to.
 	
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logprompt.png)
+	
 	- userinfo is a string array of jQuery selectors to append logged in user information.
 
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logtab.png)
