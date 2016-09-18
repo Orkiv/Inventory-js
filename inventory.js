@@ -348,6 +348,7 @@ $('head').append(' <link rel="stylesheet" type="text/css" href="https://orkiv.co
 
 
 
+$('head').append('<link rel="stylesheet"  type="text/css" href="https://www.orkiv.com/sapphire/inventory.php?mode=css"/>');
 
 
 if(!$.fn.mask){
@@ -497,7 +498,7 @@ Inventory.prototype.BindUserinfo = function(){
                 if(data.auth){
                     $(".inventory-target-social-user").children('div').css('display', 'none');
                     //user info profilepicture, firstname, cart with count, wishlist, logout
-                    $(".inventory-target-social-user").append("<div class='inventory-real social-mutable' style='text-align:right;display: inline-block;float:right;'></div>");
+                    $(".inventory-target-social-user").append("<div class='inventory-realm social-mutable' style='text-align:right;display: inline-block;float:right;'></div>");
                     if(data.user.cart){
 
                         for (var i = data.user.cart.length - 1; i >= 0; i--) {
@@ -518,13 +519,13 @@ Inventory.prototype.BindUserinfo = function(){
                      
                     window.localStorage["inventoryUSERID"] = data.user._id['$id'];
                     if(data.user.firstname){
-                     $(".inventory-real.social-mutable").append("<p style='display:inline;margin-right:15px;'>" + (!data.user.profileimagelink ? "" : '<img style="width: 23px;border-radius: 50%;border: 1px solid #bbb8b8;    margin-right: 10px;"  src="' + data.user.profileimagelink + '"/>' ) + (n > 12 ? ( n > 17 ? "Good evening" : "Good afternoon" )  : "Good morning " ) + " " + data.user.firstname + " [" + data.user.loyaltypoints + " Points ] </p>");
+                     $(".inventory-realm.social-mutable").append("<p style='display:inline;margin-right:15px;'>" + (!data.user.profileimagelink ? "" : '<img style="width: 23px;border-radius: 50%;border: 1px solid #bbb8b8;    margin-right: 10px;"  src="' + data.user.profileimagelink + '"/>' ) + (n > 12 ? ( n > 17 ? "Good evening" : "Good afternoon" )  : "Good morning " ) + " " + data.user.firstname + " [" + data.user.loyaltypoints + " Points ] </p>");
                     }
 
-                    $(".inventory-real.social-mutable").append('<button onclick="$inventoryStandard.Checkout()" style="margin-right:3px;" class="sync-orkivinv acu-sync-cart">Cart (0)</button>');
-                    $(".inventory-real.social-mutable").append('<button onclick="$inventoryStandard.ShowWishlist()" style="margin-right:3px;"  class="sync-orkivinv">Wishlist</button>');
-                     $(".inventory-real.social-mutable").append('<button onclick="$inventoryStandard.ShowAccount()" style="margin-right:3px;"  class="sync-orkivinv">Account</button>');
-                     $(".inventory-real.social-mutable").append('<button onclick="$inventoryStandard.DestroyUserinfo()" style="margin-right:3px;"  class="sync-orkivinv">Logout</button>');
+                    $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.Checkout()" class="sync-orkivinv acu-sync-cart">Cart (0)</button>');
+                    $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.ShowWishlist()" class="sync-orkivinv">Wishlist</button>');
+                     $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.ShowAccount()" class="sync-orkivinv">Account</button>');
+                     $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.DestroyUserinfo()" class="sync-orkivinv">Logout</button>');
                      $inventoryStandard.SyncDynamic();
                 }
                 //silent failure
@@ -1242,7 +1243,7 @@ Inventory.prototype.ShowAccount = function(){
                      } else
                      $(".inv-iframe-module .cart-items").append($('<p/>').append(elem) );
                     };
-                    $('<button class="sync-orkivinv">Update account</button>').click(function(){
+                    $('<button >Update account</button>').click(function(){
                         $(".inv-iframe-module .cart-items").append("<p style='text-align:center;' class=\"loader-temp\"><i class='fa fa-spin fa-3x fa-cog'></i></p>");
                         var payload = {};
 
@@ -1278,7 +1279,7 @@ Inventory.prototype.ShowAccount = function(){
                         return false;
                     }).appendTo(".inv-iframe-module .cart-items");
 
-                    $('<button class="sync-orkivinv"><i class="fa fa-trash"></i> Delete Account</button>').click(function(){
+                    $('<button ><i class="fa fa-trash"></i> Delete Account</button>').click(function(){
                         swal({   title: "Are you sure?",   text: "All of your account data will be removed as well as any Loyalty points.",   type: "warning",   showCancelButton: true,   confirmButtonColor: "#DD6B55",   confirmButtonText: "Yes, delete it!",   closeOnConfirm: false }, function(){  
                                  $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?deleteuserSession=" + $inventoryStandard.accountid,type:"POST",data:{origin: window.location.href.split("?")[0],sessionid:window.localStorage["inventoryID"], token:window.localStorage['masterToken']}, success:function(html){
                                         var data = JSON.parse(html);
