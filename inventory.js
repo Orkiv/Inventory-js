@@ -348,7 +348,6 @@ $('head').append(' <link rel="stylesheet" type="text/css" href="https://orkiv.co
 
 
 
-$('head').append('<link rel="stylesheet"  type="text/css" href="https://www.orkiv.com/sapphire/inventory.php?mode=css"/>');
 
 
 if(!$.fn.mask){
@@ -397,7 +396,7 @@ function Inventory(accountid, jstoken,alerts,syncdynamic) {
 
     if(typeof syncdynamic !== 'undefined') this.syncdynamic = syncdynamic;
     //load styles for drop in ui
-    loadjscssfile("https://orkiv.com/i/ext_css.css","css");
+    loadjscssfile("https://orkiv.com/i/ext_css.php?createSession=" + accountid,"css");
     if(!findCss("font-awesome"))
     loadjscssfile("https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css","css");
     //detect local store and alter user
@@ -498,7 +497,7 @@ Inventory.prototype.BindUserinfo = function(){
                 if(data.auth){
                     $(".inventory-target-social-user").children('div').css('display', 'none');
                     //user info profilepicture, firstname, cart with count, wishlist, logout
-                    $(".inventory-target-social-user").append("<div class='inventory-realm social-mutable' style='text-align:right;display: inline-block;float:right;'></div>");
+                    $(".inventory-target-social-user").append("<div class='inventory-real social-mutable' style='text-align:right;display: inline-block;float:right;'></div>");
                     if(data.user.cart){
 
                         for (var i = data.user.cart.length - 1; i >= 0; i--) {
@@ -519,13 +518,13 @@ Inventory.prototype.BindUserinfo = function(){
                      
                     window.localStorage["inventoryUSERID"] = data.user._id['$id'];
                     if(data.user.firstname){
-                     $(".inventory-realm.social-mutable").append("<p style='display:inline;margin-right:15px;'>" + (!data.user.profileimagelink ? "" : '<img style="width: 23px;border-radius: 50%;border: 1px solid #bbb8b8;    margin-right: 10px;"  src="' + data.user.profileimagelink + '"/>' ) + (n > 12 ? ( n > 17 ? "Good evening" : "Good afternoon" )  : "Good morning " ) + " " + data.user.firstname + " [" + data.user.loyaltypoints + " Points ] </p>");
+                     $(".inventory-real.social-mutable").append("<p style='display:inline;margin-right:15px;'>" + (!data.user.profileimagelink ? "" : '<img style="width: 23px;border-radius: 50%;border: 1px solid #bbb8b8;    margin-right: 10px;"  src="' + data.user.profileimagelink + '"/>' ) + (n > 12 ? ( n > 17 ? "Good evening" : "Good afternoon" )  : "Good morning " ) + " " + data.user.firstname + " [" + data.user.loyaltypoints + " Points ] </p>");
                     }
 
-                    $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.Checkout()" class="sync-orkivinv acu-sync-cart">Cart (0)</button>');
-                    $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.ShowWishlist()" class="sync-orkivinv">Wishlist</button>');
-                     $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.ShowAccount()" class="sync-orkivinv">Account</button>');
-                     $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.DestroyUserinfo()" class="sync-orkivinv">Logout</button>');
+                    $(".inventory-real.social-mutable").append('<button onclick="$inventoryStandard.Checkout()" style="margin-right:3px;" class="sync-orkivinv acu-sync-cart">Cart (0)</button>');
+                    $(".inventory-real.social-mutable").append('<button onclick="$inventoryStandard.ShowWishlist()" style="margin-right:3px;"  class="sync-orkivinv">Wishlist</button>');
+                     $(".inventory-real.social-mutable").append('<button onclick="$inventoryStandard.ShowAccount()" style="margin-right:3px;"  class="sync-orkivinv">Account</button>');
+                     $(".inventory-real.social-mutable").append('<button onclick="$inventoryStandard.DestroyUserinfo()" style="margin-right:3px;"  class="sync-orkivinv">Logout</button>');
                      $inventoryStandard.SyncDynamic();
                 }
                 //silent failure
