@@ -1316,7 +1316,7 @@ Inventory.prototype.ShowAccount = function(){
                                         if(data.auth){
                                             delete window.localStorage['masterToken'];
                                             delete window.localStorage['inventoryUSERID'];
-                                            window.location = "";
+                                            window.location = "?";
                                             //user info profilepicture, firstname, cart with count, wishlist, logout
                                         }
                                         //silent failure
