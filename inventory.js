@@ -569,19 +569,37 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
                      var field = data.additionalfields[i],elem; 
                      //override 
                      if(field.type == "checkbox"){
-
+                         elem =  $('<input style="" type="' + field.type + '" name="' + field.name + '" ' + ( (!field.value || field.value == "" ) ?  "" : "checked" )  +'/> ');
                      } else  if(field.type == "radio"){
-                        
+                        elem = $('<p><label>' + field.placeholder + '</label><br /></p>');
+                        for (var i = field.choices.length - 1; i >= 0; i--) {
+                          elem.append('<input type="radio" style="height:initial;padding:0;" name="' + field.name + '" value="' +field.choices[i] +'"> ' + field.choices[i] + ' <br />');
+                        };
+
                      } else  if(field.type == "select"){
-                        
-                     } else {
+                            var opsstring = '';
+                             for (var i = field.choices.length - 1; i >= 0; i--) {
+                           opsstring +=  '<option>' + field.choices[i] + '</option>';
+
+                        };
+                        elem = $('<p><label>' + field.placeholder +'</label><br /><select style="width:100%;max-width:280px;"  name="' + field.name + '">' + opsstring + '</select></p>')
+                     } else  if(field.type == "phone"){
+                          elem =  $('<input style="width:100%;max-width:280px;" type="text" is-required="' + field.required +'" placeholder="' + field.placeholder + '" value="' + field.value + '" name="' + field.name + '" />');
+                            
+                     }else {
                         elem =  $('<input style="width:100%;max-width:280px;" type="' + field.type + '" is-required="' + field.required +'" placeholder="' + field.placeholder + '" name="' + field.name + '" />');
                      }
 
-                     if(field.mask){
-                        elem.mask(field.mask);
-                     }
-                     $(".additional-fields", target).append($('<p/>').append(elem) );
+
+                     if(field.type == "phone")  elem.mask("(999) 999-9999");
+
+                  
+                     if(field.type == "checkbox"){
+                            $(".additional-fields", target).append($('<p/>').append(elem).append('<b>' + field.placeholder + '</b>') );
+                     } else
+                       $(".additional-fields", target).append($('<p/>').append(elem) );
+
+
                     };
                     $(".social-options", target).html("");
 
@@ -1228,16 +1246,28 @@ Inventory.prototype.ShowAccount = function(){
                      if(field.type == "checkbox"){
                           elem =  $('<input style="" type="' + field.type + '" name="' + field.name + '" ' + ( (!field.value || field.value == "" ) ?  "" : "checked" )  +'/> ');
                      } else  if(field.type == "radio"){
-                        
+                        elem = $('<p><label>' + field.placeholder + '</label><br /></p>');
+                        for (var i = field.choices.length - 1; i >= 0; i--) {
+                          elem.append('<input type="radio" style="height:initial;padding:0;" name="' + field.name + '" value="' +field.choices[i] +'" ' + ( field.value != field.choices[i]  ?  "" : "checked" )  +'> ' + field.choices[i] + ' <br />');
+                        };
+
                      } else  if(field.type == "select"){
-                        
-                     } else {
-                        elem =  $('<input style="width:100%;max-width:280px;" type="' + field.type + '" is-required="' + field.required +'" placeholder="' + field.placeholder + '" value="' + field.value + '" name="' + field.name + '" />');
+                            var opsstring = '';
+                             for (var i = field.choices.length - 1; i >= 0; i--) {
+                           opsstring +=  '<option ' + (  field.value != field.choices[i] ?  "" : "selected" )  +'>' + field.choices[i] + '</option>';
+
+                        };
+                        elem = $('<p><label>' + field.placeholder +'</label><br /><select style="width:100%;max-width:280px;"  name="' + field.name + '">' + opsstring + '</select></p>')
+                     } else  if(field.type == "phone"){
+                          elem =  $('<input style="width:100%;max-width:280px;" type="text" is-required="' + field.required +'" placeholder="' + field.placeholder + '" value="' + field.value + '" name="' + field.name + '" />');
+                            
+                     }else {
+                        elem =  $('<input style="width:100%;max-width:280px;" type="' + field.type + '" is-required="' + field.required +'" placeholder="' + field.placeholder + '" value="' + field.value +'" name="' + field.name + '" />');
                      }
 
-                     if(field.mask){
-                        elem.mask(field.mask);
-                     }
+
+                     if(field.type == "phone")  elem.mask("(999) 999-9999");
+                  
                      if(field.type == "checkbox"){
                          $(".inv-iframe-module .cart-items").append($('<p/>').append(elem).append('<b>' + field.placeholder + '</b>') );
                      } else
