@@ -488,6 +488,14 @@ Inventory.prototype.Data = function(){
     return this.getLocal("inventoryData",true);
 }
 
+Inventory.prototype.Reviews = function(itemid,callback){
+     $.ajax({url:"https://www.orkiv.com/i/api.php?getPublicReviews=" + this.accountid + "&item=" + itemid, success:function(html){
+                var reviews = JSON.parse(html);
+                callback(reviews);
+            }
+        });
+}
+
 Inventory.prototype.Categories = function(callback){
     
             this.xFetchapi("https://www.orkiv.com/i/ext_js_api.php",{open:"categories"},"POST",function(html){
