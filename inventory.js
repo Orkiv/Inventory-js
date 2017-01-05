@@ -487,6 +487,14 @@ function Inventory(accountid, jstoken,alerts,syncdynamic) {
 Inventory.prototype.Data = function(){
     return this.getLocal("inventoryData",true);
 }
+
+Inventory.prototype.Categories = function(callback){
+    
+            this.xFetchapi("https://www.orkiv.com/i/ext_js_api.php",{open:"categories"},"POST",function(html){
+                    //aalert(100);
+                    callback(JSON.parse(html));
+            });
+}
 Inventory.prototype.Query = function(page, query, callback){
         query['pagination'] = page;
         query['query'] = "on";

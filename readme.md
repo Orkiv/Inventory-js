@@ -258,6 +258,7 @@ To display an editable view of your user's wish list use the `ShowWishlist` func
 
 To display an editable view of your user's cart use the `ShowWishlist` function.
 
+
 ## User management
 
 Inventory JS supports out of the box basic user authentication. It works with the parameters defined within Inventory to help you convert visitors to returning customers.
@@ -277,3 +278,75 @@ Inventory JS supports out of the box basic user authentication. It works with th
 	- userinfo is a string array of jQuery selectors to append logged in user information.
 
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logtab.png)
+
+## Getting inventory Data
+
+The following functions can be used to retrieve inventory data from your account.
+
+### Inventory.prototype.Categories(callback onFinish(data))
+Fetch item categorization from your account.
+
+- Parameters :
+	- onFinish :  Function called once data is retrieved. It has 1 key :
+		- result : Array of categories. Please refer to the [category schema](#category-schema) 
+
+### Inventory.prototype.Query(int page, object query, callback onFinish(data))
+
+- Parameters :  
+	-  page : Current page to load
+	- query : Properties to compare items with, Nonetheless there are [reserved properties](#query-addons) to provide more functionality.
+	- onFinish : Function called once data is retrieved. It has three keys :
+				- pages : Available pages, starting from 0
+				- result : Array of inventory item. Please refer to the [General schema](#general-schema)  
+This function will return items which match the specified query.
+
+### Inventory.prototype.Open(string itemid, callback onFinish(data))
+
+- Parameters :
+	- itemid : Valid inventory item to open
+	- onFinish : Function called once data is retrieved. It has 2 keys :
+		- media : An array of URI strings
+		- result : Object of the requested item. Please refer to the [General schema](#general-schema)  
+
+
+## Category schema
+Here are the properties of an inventory categoy.
+### Property list
+
+- string id : ID of inventory category.
+- string name : Name of inventory category.
+- string tmp : URI to image of an item under such category.
+- array children : Array of categories. Using the same schema.
+	- *With one key difference `tmp` is replaced by `sampleimage` 
+
+## General schema
+General schema is the minimum amount of data the platform will return. If you plan on using extra fields please refer to the custom set fields section below, for information on retrieving such data.
+
+### Minimum data
+Here are some properties of an item object.
+
+- string category : Category Id of item.
+- string desc : Description of item
+- string id : Inventory item ID
+- int ordprice : Price in hundreds (ie : $1 = 100)
+- string quantity : Item quantity in stock.
+- array variations : Array of item variations. Here is the property list of a variation : 
+	- string id : ID of variation.
+	- string name : Name of variation.
+	- int priceChange : New price of item in hundreds. 
+
+### Custom set fields.
+
+Use the same name as set for field directly with your inventory item. This property will be an object, from here on you can access your custom data within the `data` property.
+
+
+## Query addons
+
+### Special query properties
+
+- 	search : Text string to match item name with.
+- sortfield :  Item property should the system use whilst sorting.
+- sortorder :  The order the API should follow. -1  for Descending and 1 for ascending.
+- ext_cat_search : A valid inventory category ID. This value will be used to find any subset of this category.
+- minp : Minimum price of an item allowed to be returned.
+- maxp : Maximum price of an item allowed to be returned.
