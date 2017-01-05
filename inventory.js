@@ -5,6 +5,15 @@
 #											 #
 ##############################################
 */
+if(!$.fn.tagsInput){
+    !function(a){var b=new Array,c=new Array;a.fn.doAutosize=function(b){var c=a(this).data("minwidth"),d=a(this).data("maxwidth"),e="",f=a(this),g=a("#"+a(this).data("tester_id"));if(e!==(e=f.val())){var h=e.replace(/&/g,"&amp;").replace(/\s/g," ").replace(/</g,"&lt;").replace(/>/g,"&gt;");g.html(h);var i=g.width(),j=i+b.comfortZone>=c?i+b.comfortZone:c,k=f.width(),l=k>j&&j>=c||j>c&&d>j;l&&f.width(j)}},a.fn.resetAutosize=function(b){var c=a(this).data("minwidth")||b.minInputWidth||a(this).width(),d=a(this).data("maxwidth")||b.maxInputWidth||a(this).closest(".tagsinput").width()-b.inputPadding,e=a(this),f=a("<tester/>").css({position:"absolute",top:-9999,left:-9999,width:"auto",fontSize:e.css("fontSize"),fontFamily:e.css("fontFamily"),fontWeight:e.css("fontWeight"),letterSpacing:e.css("letterSpacing"),whiteSpace:"nowrap"}),g=a(this).attr("id")+"_autosize_tester";!a("#"+g).length>0&&(f.attr("id",g),f.appendTo("body")),e.data("minwidth",c),e.data("maxwidth",d),e.data("tester_id",g),e.css("width",c)},a.fn.addTag=function(d,e){return e=jQuery.extend({focus:!1,callback:!0},e),this.each(function(){var f=a(this).attr("id"),g=a(this).val().split(b[f]);if(""==g[0]&&(g=new Array),d=jQuery.trim(d),e.unique){var h=a(this).tagExist(d);1==h&&a("#"+f+"_tag").addClass("not_valid")}else var h=!1;if(""!=d&&1!=h){if(a("<span>").addClass("tag").append(a("<span>").text(d).append("&nbsp;&nbsp;"),a("<a>",{href:"#",title:"Removing tag",text:"x"}).click(function(){return a("#"+f).removeTag(escape(d))})).insertBefore("#"+f+"_addTag"),g.push(d),a("#"+f+"_tag").val(""),e.focus?a("#"+f+"_tag").focus():a("#"+f+"_tag").blur(),a.fn.tagsInput.updateTagsField(this,g),e.callback&&c[f]&&c[f].onAddTag){var i=c[f].onAddTag;i.call(this,d)}if(c[f]&&c[f].onChange){var j=g.length,i=c[f].onChange;i.call(this,a(this),g[j-1])}}}),!1},a.fn.removeTag=function(d){return d=unescape(d),this.each(function(){var e=a(this).attr("id"),f=a(this).val().split(b[e]);for(a("#"+e+"_tagsinput .tag").remove(),str="",i=0;i<f.length;i++)f[i]!=d&&(str=str+b[e]+f[i]);if(a.fn.tagsInput.importTags(this,str),c[e]&&c[e].onRemoveTag){var g=c[e].onRemoveTag;g.call(this,d)}}),!1},a.fn.tagExist=function(c){var d=a(this).attr("id"),e=a(this).val().split(b[d]);return jQuery.inArray(c,e)>=0},a.fn.importTags=function(b){var c=a(this).attr("id");a("#"+c+"_tagsinput .tag").remove(),a.fn.tagsInput.importTags(this,b)},a.fn.tagsInput=function(e){var f=jQuery.extend({interactive:!0,defaultText:"add a tag",minChars:0,width:"300px",height:"100px",autocomplete:{selectFirst:!1},hide:!0,delimiter:",",unique:!0,removeWithBackspace:!0,placeholderColor:"#666666",autosize:!0,comfortZone:20,inputPadding:12},e),g=0;return this.each(function(){if("undefined"==typeof a(this).attr("data-tagsinput-init")){a(this).attr("data-tagsinput-init",!0),f.hide&&a(this).hide();var e=a(this).attr("id");(!e||b[a(this).attr("id")])&&(e=a(this).attr("id","tags"+(new Date).getTime()+g++).attr("id"));var h=jQuery.extend({pid:e,real_input:"#"+e,holder:"#"+e+"_tagsinput",input_wrapper:"#"+e+"_addTag",fake_input:"#"+e+"_tag"},f);b[e]=h.delimiter,(f.onAddTag||f.onRemoveTag||f.onChange)&&(c[e]=new Array,c[e].onAddTag=f.onAddTag,c[e].onRemoveTag=f.onRemoveTag,c[e].onChange=f.onChange);var i='<div id="'+e+'_tagsinput" class="tagsinput"><div id="'+e+'_addTag">';if(f.interactive&&(i=i+'<input id="'+e+'_tag" value="" data-default="'+f.defaultText+'" />'),i+='</div><div class="tags_clear"></div></div>',a(i).insertAfter(this),a(h.holder).css("width",f.width),a(h.holder).css("min-height",f.height),a(h.holder).css("height",f.height),""!=a(h.real_input).val()&&a.fn.tagsInput.importTags(a(h.real_input),a(h.real_input).val()),f.interactive){if(a(h.fake_input).val(a(h.fake_input).attr("data-default")),a(h.fake_input).css("color",f.placeholderColor),a(h.fake_input).resetAutosize(f),a(h.holder).bind("click",h,function(b){a(b.data.fake_input).focus()}),a(h.fake_input).bind("focus",h,function(b){a(b.data.fake_input).val()==a(b.data.fake_input).attr("data-default")&&a(b.data.fake_input).val(""),a(b.data.fake_input).css("color","#000000")}),void 0!=f.autocomplete_url){autocomplete_options={source:f.autocomplete_url};for(attrname in f.autocomplete)autocomplete_options[attrname]=f.autocomplete[attrname];void 0!==jQuery.Autocompleter?(a(h.fake_input).autocomplete(f.autocomplete_url,f.autocomplete),a(h.fake_input).bind("result",h,function(b,c,d){c&&a("#"+e).addTag(c[0]+"",{focus:!0,unique:f.unique})})):void 0!==jQuery.ui.autocomplete&&(a(h.fake_input).autocomplete(autocomplete_options),a(h.fake_input).bind("autocompleteselect",h,function(b,c){return a(b.data.real_input).addTag(c.item.value,{focus:!0,unique:f.unique}),!1}))}else a(h.fake_input).bind("blur",h,function(b){var c=a(this).attr("data-default");return""!=a(b.data.fake_input).val()&&a(b.data.fake_input).val()!=c?b.data.minChars<=a(b.data.fake_input).val().length&&(!b.data.maxChars||b.data.maxChars>=a(b.data.fake_input).val().length)&&a(b.data.real_input).addTag(a(b.data.fake_input).val(),{focus:!0,unique:f.unique}):(a(b.data.fake_input).val(a(b.data.fake_input).attr("data-default")),a(b.data.fake_input).css("color",f.placeholderColor)),!1});a(h.fake_input).bind("keypress",h,function(b){return d(b)?(b.preventDefault(),b.data.minChars<=a(b.data.fake_input).val().length&&(!b.data.maxChars||b.data.maxChars>=a(b.data.fake_input).val().length)&&a(b.data.real_input).addTag(a(b.data.fake_input).val(),{focus:!0,unique:f.unique}),a(b.data.fake_input).resetAutosize(f),!1):void(b.data.autosize&&a(b.data.fake_input).doAutosize(f))}),h.removeWithBackspace&&a(h.fake_input).bind("keydown",function(b){if(8==b.keyCode&&""==a(this).val()){b.preventDefault();var c=a(this).closest(".tagsinput").find(".tag:last").text(),d=a(this).attr("id").replace(/_tag$/,"");c=c.replace(/[\s]+x$/,""),a("#"+d).removeTag(escape(c)),a(this).trigger("focus")}}),a(h.fake_input).blur(),h.unique&&a(h.fake_input).keydown(function(b){(8==b.keyCode||String.fromCharCode(b.which).match(/\w+|[áéíóúÁÉÍÓÚñÑ,/]+/))&&a(this).removeClass("not_valid")})}}}),this},a.fn.tagsInput.updateTagsField=function(c,d){var e=a(c).attr("id");a(c).val(d.join(b[e]))},a.fn.tagsInput.importTags=function(d,e){a(d).val("");var f=a(d).attr("id"),g=e.split(b[f]);for(i=0;i<g.length;i++)a(d).addTag(g[i],{focus:!1,callback:!1});if(c[f]&&c[f].onChange){var h=c[f].onChange;h.call(d,d,g[i])}};var d=function(b){var c=!1;return 13==b.which?!0:("string"==typeof b.data.delimiter?b.which==b.data.delimiter.charCodeAt(0)&&(c=!0):a.each(b.data.delimiter,function(a,d){b.which==d.charCodeAt(0)&&(c=!0)}),c)}}(jQuery);
+    $("body").append('<style type="text/css">div.tagsinput{border:1px solid #CCC;background:#FFF;padding:5px;width:300px;height:100px;overflow-y:auto}div.tagsinput span.tag{border:1px solid #a5d24a;-moz-border-radius:2px;-webkit-border-radius:2px;display:block;float:left;padding:5px;text-decoration:none;background:#cde69c;color:#638421;margin-right:5px;margin-bottom:5px;font-family:helvetica;font-size:13px}div.tagsinput span.tag a{font-weight:700;color:#82ad2b;text-decoration:none;font-size:11px}div.tagsinput input{width:80px;margin:0 5px 5px 0;font-family:helvetica;font-size:13px;border:1px solid transparent;padding:5px;background:0 0;color:#000;outline:0}div.tagsinput div{display:block;float:left}.tags_clear{clear:both;width:100%;height:0}.not_valid{background:#FBD8DB!important;color:#90111A!important} div.tagsinput input {width: 190px !important;}</style>');
+}
+
+
+if(!$.fn.jsSocials){
+!function(a,b,c){function d(a,c){var d=b(a);d.data(f,this),this._$element=d,this.shares=[],this._init(c),this._render()}var e="JSSocials",f=e,g=function(a,c){return b.isFunction(a)?a.apply(c,b.makeArray(arguments).slice(2)):a},h=/(\.(jpeg|png|gif|bmp|svg\+xml)$|^data:image\/(jpeg|png|gif|bmp|svg\+xml);base64)/i,i=/(&?[a-zA-Z0-9]+=)?\{([a-zA-Z0-9]+)\}/g,j={G:1e9,M:1e6,K:1e3},k={};d.prototype={url:"",text:"",shareIn:"blank",showLabel:function(a){return this.showCount===!1?a>this.smallScreenWidth:a>=this.largeScreenWidth},showCount:function(a){return a<=this.smallScreenWidth?"inside":!0},smallScreenWidth:640,largeScreenWidth:1024,resizeTimeout:200,elementClass:"jssocials",sharesClass:"jssocials-shares",shareClass:"jssocials-share",shareButtonClass:"jssocials-share-button",shareLinkClass:"jssocials-share-link",shareLogoClass:"jssocials-share-logo",shareLabelClass:"jssocials-share-label",shareLinkCountClass:"jssocials-share-link-count",shareCountBoxClass:"jssocials-share-count-box",shareCountClass:"jssocials-share-count",shareZeroCountClass:"jssocials-share-no-count",_init:function(a){this._initDefaults(),b.extend(this,a),this._initShares(),this._attachWindowResizeCallback()},_initDefaults:function(){this.url=a.location.href,this.text=b.trim(b("meta[name=description]").attr("content")||b("title").text())},_initShares:function(){this.shares=b.map(this.shares,b.proxy(function(a){"string"==typeof a&&(a={share:a});var c=a.share&&k[a.share];if(!c&&!a.renderer)throw Error("Share '"+a.share+"' is not found");return b.extend({url:this.url,text:this.text},c,a)},this))},_attachWindowResizeCallback:function(){b(a).on("resize",b.proxy(this._windowResizeHandler,this))},_detachWindowResizeCallback:function(){b(a).off("resize",this._windowResizeHandler)},_windowResizeHandler:function(){(b.isFunction(this.showLabel)||b.isFunction(this.showCount))&&(a.clearTimeout(this._resizeTimer),this._resizeTimer=setTimeout(b.proxy(this.refresh,this),this.resizeTimeout))},_render:function(){this._clear(),this._defineOptionsByScreen(),this._$element.addClass(this.elementClass),this._$shares=b("<div>").addClass(this.sharesClass).appendTo(this._$element),this._renderShares()},_defineOptionsByScreen:function(){this._screenWidth=b(a).width(),this._showLabel=g(this.showLabel,this,this._screenWidth),this._showCount=g(this.showCount,this,this._screenWidth)},_renderShares:function(){b.each(this.shares,b.proxy(function(a,b){this._renderShare(b)},this))},_renderShare:function(a){var c;c=b.isFunction(a.renderer)?b(a.renderer()):this._createShare(a),c.addClass(this.shareClass).addClass(a.share?"jssocials-share-"+a.share:"").addClass(a.css).appendTo(this._$shares)},_createShare:function(a){var c=b("<div>"),d=this._createShareLink(a).appendTo(c);if(this._showCount){var e="inside"===this._showCount,f=e?d:b("<div>").addClass(this.shareCountBoxClass).appendTo(c);f.addClass(e?this.shareLinkCountClass:this.shareCountBoxClass),this._renderShareCount(a,f)}return c},_createShareLink:function(a){var c=this._getShareStrategy(a),d=c.call(a,{shareUrl:this._getShareUrl(a)});return d.addClass(this.shareLinkClass).append(this._createShareLogo(a)),this._showLabel&&d.append(this._createShareLabel(a)),b.each(this.on||{},function(c,e){b.isFunction(e)&&d.on(c,b.proxy(e,a))}),d},_getShareStrategy:function(a){var b=m[a.shareIn||this.shareIn];if(!b)throw Error("Share strategy '"+this.shareIn+"' not found");return b},_getShareUrl:function(a){var b=g(a.shareUrl,a);return this._formatShareUrl(b,a)},_createShareLogo:function(a){var c=a.logo,d=h.test(c)?b("<img>").attr("src",a.logo):b("<i>").addClass(c);return d.addClass(this.shareLogoClass),d},_createShareLabel:function(a){return b("<span>").addClass(this.shareLabelClass).text(a.label)},_renderShareCount:function(a,c){var d=b("<span>").addClass(this.shareCountClass);c.addClass(this.shareZeroCountClass).append(d),this._loadCount(a).done(b.proxy(function(a){a&&(c.removeClass(this.shareZeroCountClass),d.text(a))},this))},_loadCount:function(a){var c=b.Deferred(),d=this._getCountUrl(a);if(!d)return c.resolve(0).promise();var e=b.proxy(function(b){c.resolve(this._getCountValue(b,a))},this);return b.getJSON(d).done(e).fail(function(){b.get(d).done(e).fail(function(){c.resolve(0)})}),c.promise()},_getCountUrl:function(a){var b=g(a.countUrl,a);return this._formatShareUrl(b,a)},_getCountValue:function(a,c){var d=(b.isFunction(c.getCount)?c.getCount(a):a)||0;return"string"==typeof d?d:this._formatNumber(d)},_formatNumber:function(a){return b.each(j,function(b,c){return a>=c?(a=parseFloat((a/c).toFixed(2))+b,!1):void 0}),a},_formatShareUrl:function(b,c){return b.replace(i,function(b,d,e){var f=c[e]||"";return f?(d||"")+a.encodeURIComponent(f):""})},_clear:function(){a.clearTimeout(this._resizeTimer),this._$element.empty()},_passOptionToShares:function(a,c){var d=this.shares;b.each(["url","text"],function(e,f){f===a&&b.each(d,function(b,d){d[a]=c})})},_normalizeShare:function(a){return b.isNumeric(a)?this.shares[a]:"string"==typeof a?b.grep(this.shares,function(b){return b.share===a})[0]:a},refresh:function(){this._render()},destroy:function(){this._clear(),this._detachWindowResizeCallback(),this._$element.removeClass(this.elementClass).removeData(f)},option:function(a,b){return 1===arguments.length?this[a]:(this[a]=b,this._passOptionToShares(a,b),void this.refresh())},shareOption:function(a,b,c){return a=this._normalizeShare(a),2===arguments.length?a[b]:(a[b]=c,void this.refresh())}},b.fn.jsSocials=function(a){var e=b.makeArray(arguments),g=e.slice(1),h=this;return this.each(function(){var e,i=b(this),j=i.data(f);if(j)if("string"==typeof a){if(e=j[a].apply(j,g),e!==c&&e!==j)return h=e,!1}else j._detachWindowResizeCallback(),j._init(a),j._render();else new d(i,a)}),h};var l=function(a){var c;b.isPlainObject(a)?c=d.prototype:(c=k[a],a=arguments[1]||{}),b.extend(c,a)},m={popup:function(c){return b("<a>").attr("href","#").on("click",function(){return a.open(c.shareUrl,null,"width=600, height=400, location=0, menubar=0, resizeable=0, scrollbars=0, status=0, titlebar=0, toolbar=0"),!1})},blank:function(a){return b("<a>").attr({target:"_blank",href:a.shareUrl})},self:function(a){return b("<a>").attr({target:"_self",href:a.shareUrl})}};a.jsSocials={Socials:d,shares:k,shareStrategies:m,setDefaults:l}}(window,jQuery),function(a,b,c){b.extend(c.shares,{email:{label:"E-mail",logo:"fa fa-at",shareUrl:"mailto:{to}?subject={text}&body={url}",countUrl:"",shareIn:"self"},twitter:{label:"Tweet",logo:"fa fa-twitter",shareUrl:"https://twitter.com/share?url={url}&text={text}&via={via}&hashtags={hashtags}",countUrl:""},facebook:{label:"Like",logo:"fa fa-facebook",shareUrl:"https://facebook.com/sharer/sharer.php?u={url}",countUrl:"http://graph.facebook.com/?id={url}",getCount:function(a){return a.share&&a.share.share_count||0}},googleplus:{label:"+1",logo:"fa fa-google",shareUrl:"https://plus.google.com/share?url={url}",countUrl:"https://cors-anywhere.herokuapp.com/https://plusone.google.com/_/+1/fastbutton?url={url}",getCount:function(a){return parseFloat((a.match(/\{c: ([.0-9E]+)/)||[])[1])}},linkedin:{label:"Share",logo:"fa fa-linkedin",shareUrl:"https://www.linkedin.com/shareArticle?mini=true&url={url}",countUrl:"https://www.linkedin.com/countserv/count/share?format=jsonp&url={url}&callback=?",getCount:function(a){return a.count}},pinterest:{label:"Pin it",logo:"fa fa-pinterest",shareUrl:"https://pinterest.com/pin/create/bookmarklet/?media={media}&url={url}&description={text}",countUrl:"https://api.pinterest.com/v1/urls/count.json?&url={url}&callback=?",getCount:function(a){return a.count}},stumbleupon:{label:"Share",logo:"fa fa-stumbleupon",shareUrl:"http://www.stumbleupon.com/submit?url={url}&title={title}",countUrl:"https://cors-anywhere.herokuapp.com/https://www.stumbleupon.com/services/1.01/badge.getinfo?url={url}",getCount:function(a){return a.result.views}},telegram:{label:"Telegram",logo:"fa fa-paper-plane",shareUrl:"tg://msg?text={url} {text}",countUrl:"",shareIn:"self"},whatsapp:{label:"WhatsApp",logo:"fa fa-whatsapp",shareUrl:"whatsapp://send?text={url} {text}",countUrl:"",shareIn:"self"},line:{label:"LINE",logo:"fa fa-comment",shareUrl:"http://line.me/R/msg/text/?{text} {url}",countUrl:""}})}(window,jQuery,window.jsSocials);
+}
 
 var ready = (function(){
 
@@ -309,6 +318,8 @@ function hideInventoryModal(){
    if(  $(".inv-iframe-holder .inv-iframe-module").css('display') == "none"){
      $(".inv-iframe-holder-in").css('display','none');
       $(".inv-iframe-holder .inv-iframe-module").css('display','block');
+       document.getElementById("InventoryIframe").src = "https://orkiv.com/i/loading.php";
+       GetCardNSuch();
    } else {
         $(".inv-iframe-holder-in").css('display','block');
         $(".inv-iframe-holder .inv-iframe-module").remove();
@@ -443,6 +454,10 @@ function Inventory(accountid, jstoken,alerts,syncdynamic) {
                     }
                 }
         };
+         if(window["GETPARAM"]("refid") && window["GETPARAM"]("prog")){
+                window.localStorage['refid'] = window["GETPARAM"]("ref");
+                 window.localStorage['prog'] = window["GETPARAM"]("prog");
+            }
             if(window["GETPARAM"]("setMastertoken")){
                 window.localStorage['masterToken'] = window["GETPARAM"]("setMastertoken");
             }
@@ -472,6 +487,21 @@ function Inventory(accountid, jstoken,alerts,syncdynamic) {
 Inventory.prototype.Data = function(){
     return this.getLocal("inventoryData",true);
 }
+Inventory.prototype.Query = function(page, query, callback){
+        query['pagination'] = page;
+        query['query'] = "on";
+            this.xFetchapi("https://www.orkiv.com/i/ext_js_api.php",query,"POST",function(html){
+                    //aalert(100);
+                    callback(JSON.parse(html));
+            });
+}
+
+Inventory.prototype.Open = function(id ,callback){
+             this.xFetchapi("https://www.orkiv.com/i/ext_js_api.php",{open: id},"POST",function(html){
+                    //aalert(100);
+                    callback(JSON.parse(html));
+            });
+}
 
 Inventory.prototype.DestroyUserinfo = function(){
 
@@ -491,11 +521,13 @@ Inventory.prototype.DestroyUserinfo = function(){
 
 Inventory.prototype.BindUserinfo = function(){
         //request with master token
-
+        var plugin = this;
         if(window.localStorage['masterToken'])
         $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?verifySession=" + $inventoryStandard.accountid,type:"POST",data:{origin: window.location.href.split("?")[0],sessionid:window.localStorage["inventoryID"], token:window.localStorage['masterToken']}, success:function(html){
                 var data = JSON.parse(html);
                 if(data.auth){
+                    plugin.user = data.user;
+                    $inventoryStandard = plugin;
                     $(".inventory-target-social-user").children('div').css('display', 'none');
                     //user info profilepicture, firstname, cart with count, wishlist, logout
                     $(".inventory-target-social-user").append("<div class='inventory-realm social-mutable' style='text-align:right;display: inline-block;float:right;'></div>");
@@ -519,7 +551,7 @@ Inventory.prototype.BindUserinfo = function(){
                      
                     window.localStorage["inventoryUSERID"] = data.user._id['$id'];
                     if(data.user.firstname){
-                     $(".inventory-realm.social-mutable").append("<p style='display:inline;margin-right:15px;'>" + (!data.user.profileimagelink ? "" : '<img style="width: 23px;border-radius: 50%;border: 1px solid #bbb8b8;    margin-right: 10px;"  src="' + data.user.profileimagelink + '"/>' ) + (n > 12 ? ( n > 17 ? "Good evening" : "Good afternoon" )  : "Good morning " ) + " " + data.user.firstname + "</p>");
+                     $(".inventory-realm.social-mutable").append("<p style='display:inline;margin-right:15px;'>" + (!data.user.profileimagelink ? "" : '<img style="width: 23px;border-radius: 50%;border: 1px solid #bbb8b8;    margin-right: 10px;"  src="' + data.user.profileimagelink + '"/>' ) + (n > 12 ? ( n > 17 ? "Good evening" : "Good afternoon" )  : "Good morning " ) + " " + data.user.firstname + " [" + data.user.loyaltypoints + " Points]</p>");
                     }
 
                     $(".inventory-realm.social-mutable").append('<button onclick="$inventoryStandard.Checkout()" class="sync-orkivinv acu-sync-cart">Cart (0)</button>');
@@ -541,8 +573,8 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
         } 
         target.children('div').css('display','none');
       
-
-
+        var plugin = this;
+       // plugin.user = "";
         if(typeof extraselectors !== 'undefined'){
             //iterate and bind as receivable
             for (var i = extraselectors.length - 1; i >= 0; i--) {
@@ -560,6 +592,9 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
                     if(data.auth){
                         //show logout prompt
                      // this.BindUserinfo();
+                   //  console.log(plugin);
+                     plugin.user = data.user;
+                     $inventoryStandard = plugin;
                     } else {
                         $(".loader-temp", target).remove();
                         target.children('div').css('display', 'block');
@@ -671,6 +706,10 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
                                 if(!cancel){
                                      target.prepend("<p style='text-align:center;' class=\"loader-temp\"><i class='fa fa-spin fa-3x fa-cog'></i></p>");
 
+                                     if(window.localStorage['refid'] && window.localStorage["prog"]){
+                                        payload["refid"] = window.localStorage['refid'];
+                                        payload['prog'] = window.localStorage['prog'];
+                                     }
                                       $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?createSession=" + $inventoryStandard.accountid, type:"POST",data:payload,success:function(html){
                                     $(".loader-temp", target).remove();
                                         var data = JSON.parse(html);
@@ -1146,12 +1185,78 @@ Inventory.prototype.addCart = function(itemid,quantity,variations) {
 
 };
 
+function GetCardNSuch(){
+    //atl-card 
+     if(window.localStorage['masterToken'] && $(".invc.atl-card").length > 0)
+        $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?getBinfo=" + $inventoryStandard.accountid,type:"POST",data:{origin: window.location.href.split("?")[0],sessionid:window.localStorage["inventoryID"], token:window.localStorage['masterToken']}, success:function(html){
+                var data = JSON.parse(html);
+                if(data.auth){
+                    //setu
+                    var tmph = "";
+                    for (var i = data.cards.length - 1; i >= 0; i--) {
+                        card = data.cards[i];
+                        tmph += '<div style="padding-top:20px"> <button class="remover" table="token_vault" oid="' + card._id['$id'] + '" style="float:right;">Delete</button><h5>' + card.nickname + '</h5><p><b><input type="radio" style="height:initial;" name="default_card" value="' + card._id['$id'] + '" ' + (card.default ? "checked" : "" ) +'> Default</b></p></div>';
+                    };
+                    $(".invc.atl-card").html(tmph);
+                    tmph = "";
+                     for (var i = data.addresses.length - 1; i >= 0; i--) {
+                        address = data.addresses[i];
+                        tmph += '<div style="padding-top:20px" > <button class="remover" table="address_vault" oid="' + address._id['$id'] + '" style="float:right;">Delete</button><h5>' + address.info_sadr1 + (address.info_sadr2 != "" ? " " + address.info_sadr2 : "" ) + ', ' + address.info_scty + ', ' + address.info_szip + ', ' + address.state + '</h5><p><b><input style="height:initial;" type="radio" name="default_address" value="' + address._id['$id'] + '" ' + (address.default ? "checked" : "" ) +'> Default</b></p></div>';
+                    };
+                    $(".invc.atl-addr").html(tmph);
+                    
+
+                    $("input[name='default_card']").change(function() { 
+                           $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?setdefaultcard=" + $inventoryStandard.accountid,type:"POST",data:{ id: this.value,sessionid:window.localStorage["inventoryID"], token:window.localStorage['masterToken']}, success:function(html){
+                                   var data = JSON.parse(html);
+                                    if(data.auth){
+                                     //   target.parent().remove(); 
+                                    }
+                            } 
+                    });
+                       } );
+
+                     $("input[name='default_address']").change(function() {
+
+                         $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?setdefaultaddress=" + $inventoryStandard.accountid,type:"POST",data:{ id: this.value,sessionid:window.localStorage["inventoryID"], token:window.localStorage['masterToken']}, success:function(html){
+                                   var data = JSON.parse(html);
+                                    if(data.auth){
+                                     //   target.parent().remove(); 
+                                    }
+                            } 
+                           });
+
+                     } );
+
+                    $(".invc .remover").click(function(){
+                        var target = $(this);
+                        $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?removeBinfo=" + $inventoryStandard.accountid,type:"POST",data:{table: $(this).attr("table"), id: $(this).attr("oid") ,sessionid:window.localStorage["inventoryID"], token:window.localStorage['masterToken']}, success:function(html){
+                                   var data = JSON.parse(html);
+                                    if(data.auth){
+                                        target.parent().remove(); 
+                                    }
+                            } 
+                    });
+                        return  false;
+                    });
+
+                }
+
+            } });
+}
+
 Inventory.prototype.ShowCart = function(){
   var data = this.getLocal("inventoryData",true);   
     if(data.cart.length == 0){
         this.Alert("Cart empty!");
         console.log("Cart empty");
     } else {
+        if(this.user){
+            if(this.user.oneclick){
+                this.OneClick();
+                return;
+            }
+        } 
     this.showModal();
     //InventoryIframe
     var cartlink = "https://www.orkiv.com/i/cart-checkout" + stripeMod + "/?" + $inventoryStandard.accountid + "=";
@@ -1176,7 +1281,7 @@ Inventory.prototype.ShowCart = function(){
         if(i != 0) cartlink += "&";
     };
 
-    document.getElementById("InventoryIframe").src = cartlink + "&sessionid=" + window.localStorage.inventoryID;
+    document.getElementById("InventoryIframe").src = cartlink  + ( $inventoryStandard.user ?  "&userid=" + $inventoryStandard.user._id.$id  : ""  );
     }             
 }
 
@@ -1224,7 +1329,39 @@ Inventory.prototype.ShowAccount = function(){
                         $(".inv-iframe-module .cart-items").html('<h1 class="profile-target" style="text-align:center;"><img style="width: 128px;border-radius: 50%;border: 1px solid #bbb8b8;"  src="' + data.user.profileimagelink + '"/></h1>');
                        }
 
+                   
+
+                          $(".inv-iframe-module .cart-items").parent().prepend("<div style='display:none;text-align:center;padding:20px;'  class='card-items'><button class='invc add-new-card'>Add new card</button><form><div class='invc atl-card'></div></form></div><div style='display:none;text-align:center;padding:20px;' class='addr'><button class='invc add-new-addr'>Add new address</button><form><div class='invc atl-addr'></div></form></div>");
+                          $(".invc.add-new-card").click(function(){
+
+                             $inventoryStandard.showModal();
+    //InventoryIframe
+    var cartlink = "https://www.orkiv.com/i/add-card/?" + $inventoryStandard.accountid + "=" +  $inventoryStandard.user._id['$id'];
+
+    
+    document.getElementById("InventoryIframe").src = cartlink;
+                            return false;
+                          });
+
+                                     $(".invc.add-new-addr").click(function(){
+
+                             $inventoryStandard.showModal();
+    //InventoryIframe
+    var cartlink = "https://www.orkiv.com/i/add-addr/?" + $inventoryStandard.accountid + "=" +  $inventoryStandard.user._id['$id'];
+
+    
+    document.getElementById("InventoryIframe").src = cartlink;
+                            return false;
+                          });
+
+                        GetCardNSuch();
+
                         $(".inv-iframe-module .cart-items").append("<p>Update profile picture</p>");
+                            $(".inv-iframe-module .cart-items").parent().prepend('<div style="padding-top:35px;text-align:center;"><p><button tog=".cart-items" class="invc update-card">Account settings</button> <button tog=".card-items" class="invc update-card">Saved cards</button> <button tog=".addr" class="invc update-card">Saved addresses</button></p> </div>');
+                       $(".invc.update-card").click(function(){
+                               $(".inv-iframe-module .cart-items,.inv-iframe-module .card-items,.inv-iframe-module .addr").css('display',"none");
+                               $(".inv-iframe-module " + $(this).attr("tog")).css('display', 'block');
+                       });
                         $(".inv-iframe-module .cart-items").append($('<p/>').append($('<input type="file" adparam="p" accept="image/*" />').change(function(){
 
                              var file    = document.querySelector('input[adparam=p]').files[0];
@@ -1273,7 +1410,7 @@ Inventory.prototype.ShowAccount = function(){
                      } else
                      $(".inv-iframe-module .cart-items").append($('<p/>').append(elem) );
                     };
-                    $('<button >Update account</button>').click(function(){
+                    $('<button  style="margin-right:10px;">Update account</button>').click(function(){
                         $(".inv-iframe-module .cart-items").append("<p style='text-align:center;' class=\"loader-temp\"><i class='fa fa-spin fa-3x fa-cog'></i></p>");
                         var payload = {};
 
@@ -1756,7 +1893,7 @@ Inventory.prototype.Buy = function(itemid,quantity,variations) {
         //quantitychain.push(itemlink + "=" + item.quantity)
 
     cartlink += itemlink + "&" + itemlink + "=" + quantity;
-    document.getElementById("InventoryIframe").src = cartlink;
+    document.getElementById("InventoryIframe").src = cartlink + ( $inventoryStandard.user ?  "&userid=" + $inventoryStandard.user._id.$id  : ""  );
 };
 
 Inventory.prototype.BuyService = function(itemid) {
@@ -1770,9 +1907,56 @@ Inventory.prototype.BuyService = function(itemid) {
         //quantitychain.push(itemlink + "=" + item.quantity)
 
     cartlink += itemlink  ;
-    document.getElementById("InventoryIframe").src = cartlink;
+    document.getElementById("InventoryIframe").src = cartlink + ( $inventoryStandard.user ?  "&userid=" + $inventoryStandard.user._id.$id  : ""  );
 };
 
+Inventory.prototype.GenCartlink = function(){
+
+var data = this.getLocal("inventoryData",true);   
+
+    //InventoryIframe
+    var cartlink = "https://orkiv.com/i/cart-one/?" + $inventoryStandard.accountid + "=";
+    var data = this.getLocal("inventoryData",true); 
+
+    var quantitychain = [];
+    for (var i = data.cart.length - 1; i >= 0; i--) {
+        var item = data.cart[i];
+        var itemlink =  item.id ;
+        
+        quantitychain.push(itemlink + "=" + item.quantity)
+
+        cartlink += itemlink;
+
+        if(i != 0)
+        cartlink += ",";
+    }
+    cartlink += "&";
+    for (var i = quantitychain.length - 1; i >= 0; i--) {
+        cartlink += quantitychain[i];
+
+        if(i != 0) cartlink += "&";
+    };
+
+   return  cartlink  + ( $inventoryStandard.user ?  "&userid=" + $inventoryStandard.user._id.$id  : ""  );
+
+         
+}
+
+
+Inventory.prototype.OneClick = function(){
+      var data = this.getLocal("inventoryData",true);   
+    if(data.cart.length == 0){
+        this.Alert("Cart empty!");
+        console.log("Cart empty");
+    } else {
+    this.showModal();
+    //InventoryIframe
+    var basepage = "data:text/html;base64," + window.btoa('<form id="vx_t" method="POST" action="' + this.GenCartlink() + '"><input type="hidden" name="user_token" value="' + window.localStorage['masterToken']   + '" /><input type="submit"> </form><script> document.getElementById("vx_t").submit()</script>');
+
+
+    document.getElementById("InventoryIframe").src = basepage;
+    }  
+}
 
 Inventory.prototype.Checkout = function() {
 
@@ -1780,7 +1964,7 @@ Inventory.prototype.Checkout = function() {
        this.showModal();
    $(".inv-iframe-holder-in").css('display', 'none');
    $(".inv-iframe-module").remove();
-   $(".inv-iframe-holder").append('<div class="inv-iframe-module inventory-realm" style="width:100%;background:#ededed;"><div class="column one-half cart-items"><h3><i class="fa fa-shopping-cart"></i> Items in cart</h3></div><div class="column one-half subtotal"><h2>Subtotal</h2><h1>subtotal</h1><p style="clear:both"><button class="u-full-width" onclick="$inventory.ShowCart()"><i class="fa fa-shopping-cart"></i> Checkout</button></p></div> <div style="clear:both"></div> </div>');
+   $(".inv-iframe-holder").append('<div class="inv-iframe-module inventory-realm" style="width:100%;background:#ededed;"><div class="column one-half cart-items"><h3><i class="fa fa-shopping-cart"></i> Items in cart</h3></div><div class="column one-half subtotal"><h2>Subtotal</h2><h1>subtotal</h1><div class="ext-oneclick"></div><p style="clear:both"><button class="update-to-oneclick u-full-width" onclick="$inventory.ShowCart()"><i class="fa fa-shopping-cart"></i> Checkout</button></p></div> <div style="clear:both"></div> </div>');
  // this.ShowCart();
     var itemids = [];
 
@@ -1823,6 +2007,32 @@ Inventory.prototype.Checkout = function() {
             var grandtotal = 0;
             $("[inventory-cartid]").each(function(){
               grandtotal += parseInt( $(this).attr("price") ) * parseInt($(this).attr("quantity"));
+            });
+            //add additionals here
+
+              if(window.localStorage['masterToken'] )
+        $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?onex=" + $inventoryStandard.accountid,type:"POST",data:{origin: window.location.href.split("?")[0],sessionid:window.localStorage["inventoryID"],cartlink : $inventoryStandard.GenCartlink() ,token:window.localStorage['masterToken']}, success:function(html){
+            var data = JSON.parse(html);
+                    if(data.auth){
+                        // load valid reductions
+                        $(".inventory-realm .update-to-oneclick").attr("onclick", "$inventoryStandard.OneClick()");
+                     /*   if($(".inventory-realm .coupon-field").length == 0){
+                            var couponfield = $('<div style="margin:15px;" class="coupon-field"><div class=""><p><input class="form-control tag-form" value="" type="text" placeholder="Coupon Code" name="rdCode"></p></div>  <div class=""><button class="rdmt">Redeem</button></div></div>');
+                              $(".inventory-realm .ext-oneclick").parent().prepend(couponfield);
+                            $(".inventory-realm .rdmt").click(function(){
+                                window["InventoryTallyCart"]();
+                                return false;
+                            });
+                            $(".inventory-realm .tag-form" ).tagsInput({  'height':'90px',
+                               'width':'100%',
+                               'interactive':true,
+                               'defaultText':'Enter promotional codes here'});
+                          
+                        } */
+                        //ext-oneclick
+                        //red grand total as needed
+                    }
+                }
             });
             $("h1" , $(".inv-iframe-module .subtotal")).html("$ " + (grandtotal/100).toFixed(2) );
           }
@@ -1920,6 +2130,8 @@ Inventory.prototype.Checkout = function() {
               });
         };
 
+
+
         window["InventoryTallyCart"]();
     } 
   });
@@ -1967,6 +2179,30 @@ Inventory.prototype.xFetch = function(url,payload,type,callback){
     payload.owner = this.accountid;
     payload.jstoken = this.jstoken
     payload.client = window.localStorage['inventoryID'];
+  }
+
+  if(type == "POST"){
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(serialize(payload));
+} else  xhttp.send();
+}
+
+Inventory.prototype.xFetchapi = function(url,payload,type,callback){
+      var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+        callback(xhttp.responseText);
+
+    } 
+  };
+
+
+  xhttp.open(type, url, true);
+
+  if(payload){
+    payload.id = this.accountid;
+    payload.key = this.jstoken
+   // payload.client = window.localStorage['inventoryID'];
   }
 
   if(type == "POST"){

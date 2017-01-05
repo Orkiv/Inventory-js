@@ -1,4 +1,4 @@
-## Orkiv Inventory JS plugin
+## Epic Commerce JS plugin
 ![enter image description here](http://www.devpointlabs.com/assets/javascript/javascript-icon-59b52f096f36f476bbdfac982a25240583d483b1157b76771e59077025f62d38.png)  ![enter image description here](https://www.orkiv.com/images/inventory.png)
 
 ## Navigation
@@ -23,6 +23,7 @@
 ### Requirements
 
 Inventory JS requires `jQuery 1.9+`
+Epic Commerce account
 
 
 ### Setup
@@ -36,7 +37,7 @@ Or host this one on us :
 	<script type="text/javascript" src="https://www.orkiv.com/i/inventory.js"></script>
 
 Initialize the class with the following code. Replace `accountid` with your actual account ID and `frontendkey` with a valid JS Key generated for your account.
-You can access all of this information under the settings section of your account.
+You can access all of this information under the settings section of your account within Epic commerce.
 
 The variable  'itemid' is used throughout this document. It refers to any of your items' id.
 
@@ -260,6 +261,12 @@ To display an editable view of your user's cart use the `ShowWishlist` function.
 ## User management
 
 Inventory JS supports out of the box basic user authentication. It works with the parameters defined within Inventory to help you convert visitors to returning customers.
+
+### Inventory.prototype.user - Object
+
+	- Information about user
+	- Any custom set key within Epic commerce's interfaces will be available within this object.
+
 
 ### Inventory.prototype.CreateSocialSupport(string panel, array[ userinfo)
 
