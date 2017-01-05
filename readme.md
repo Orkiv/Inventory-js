@@ -12,6 +12,7 @@
  6. [HTML UI](#drop-in-ui)
  7. [Additional customization](#inventory-object)
  8. [User management](#user-management)
+ 9. [Getting inventory data](#getting-inventory-data)
 
 ### Updates
 
