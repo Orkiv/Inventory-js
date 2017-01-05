@@ -12,7 +12,6 @@
  6. [HTML UI](#drop-in-ui)
  7. [Additional customization](#inventory-object)
  8. [User management](#user-management)
- 9. [Getting inventory data](#getting-inventory-data)
 
 ### Updates
 
@@ -284,11 +283,22 @@ Inventory JS supports out of the box basic user authentication. It works with th
 
 The following functions can be used to retrieve inventory data from your account.
 
+### Inventory.prototype.Reviews(string itemid, callback onFinish(data))
+Get reviews for the specified item.
+
+- Parameters :
+	- onFinish: Function called once data is retrieved. Function variable  data has 4 keys :
+	- usercount :  integer of how many users have reviewed your product.
+	- rating : double of the specified item's average rating.
+	- comments : Array of user comments. Each object has 2 parameters :
+		- Comments : String of user feedback
+		- ratings : string number of stars user has given for product. 
+	- 
 ### Inventory.prototype.Categories(callback onFinish(data))
 Fetch item categorization from your account.
 
 - Parameters :
-	- onFinish :  Function called once data is retrieved. It has 1 key :
+	- onFinish :  Function called once data is retrieved. Function variable  data has 1 key :
 		- result : Array of categories. Please refer to the [category schema](#category-schema) 
 
 ### Inventory.prototype.Query(int page, object query, callback onFinish(data))
@@ -296,7 +306,7 @@ Fetch item categorization from your account.
 - Parameters :  
 	-  page : Current page to load
 	- query : Properties to compare items with, Nonetheless there are [reserved properties](#query-addons) to provide more functionality.
-	- onFinish : Function called once data is retrieved. It has three keys :
+	- onFinish : Function called once data is retrieved. Function variable has three keys :
 				- pages : Available pages, starting from 0
 				- result : Array of inventory item. Please refer to the [General schema](#general-schema)  
 This function will return items which match the specified query.
@@ -305,13 +315,13 @@ This function will return items which match the specified query.
 
 - Parameters :
 	- itemid : Valid inventory item to open
-	- onFinish : Function called once data is retrieved. It has 2 keys :
+	- onFinish : Function called once data is retrieved. Function variable keys :
 		- media : An array of URI strings
 		- result : Object of the requested item. Please refer to the [General schema](#general-schema)  
 
 
 ## Category schema
-Here are the properties of an inventory categoy.
+
 ### Property list
 
 - string id : ID of inventory category.
