@@ -535,6 +535,27 @@ Inventory.prototype.DestroyUserinfo = function(){
         });
 }
 
+
+//recordInterest itemid
+Inventory.prototype.SaveInterest = function(itemid){
+      $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?recordInt=" + $inventoryStandard.accountid,type:"POST",data:{origin: window.location.href,sessionid:window.localStorage["inventoryID"], itemid : itemid, token:window.localStorage['masterToken']}, success:function(html){
+                var data = JSON.parse(html);
+             //   callback(data.auth);
+                //silent failure
+            } 
+        });
+}
+Inventory.prototype.Eval = function(guide, callback){
+
+  
+       $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?verifyGuide=" + $inventoryStandard.accountid,type:"POST",data:{origin: window.location.href,sessionid:window.localStorage["inventoryID"], guide : guide, token:window.localStorage['masterToken']}, success:function(html){
+                var data = JSON.parse(html);
+                callback(data.auth);
+                //silent failure
+            } 
+        });
+}
+
 Inventory.prototype.BindUserinfo = function(){
         //request with master token
         var plugin = this;

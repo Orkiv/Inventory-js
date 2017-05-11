@@ -301,6 +301,22 @@ Fetch item categorization from your account.
 	- onFinish :  Function called once data is retrieved. Function variable  data has 1 key :
 		- result : Array of categories. Please refer to the [category schema](#category-schema) 
 
+### Inventory.prototype.SaveInterest(string item)
+Add category or item to user interests.
+
+- Parameters :
+ - item : String of category or item id to add to user interest. The system will automatically add an item's parent to the user's interests. 
+
+### Inventory.prototype.DestroyUserinfo()
+Delete current user session.
+
+### Inventory.prototype.Eval(string guide_id ,callback onFinish(isTrue))
+Determine if current user returns true on decision guide.
+
+- Parameters :
+    - guide_id : String of Decision guide to use. Find your decision guides [here](https://www.orkiv.com/i/ai/#/guides)
+	- onFinish :  Function called once guide is evaluated. Function variable  isTrue is `bool` of guide evaluation.
+
 ### Inventory.prototype.Query(int page, object query, callback onFinish(data))
 
 - Parameters :  
