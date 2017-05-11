@@ -305,7 +305,7 @@ Fetch item categorization from your account.
 Add category or item to user interests.
 
 - Parameters :
- - item : String of category or item id to add to user interest. The system will automatically add an item's parent to the user's interests. 
+ - item : String of item id to add to user interest. You may also use a category id  instead of an item id as well. The system will automatically add an item's parent to the user's interests. 
 
 ### Inventory.prototype.DestroyUserinfo()
 Delete current user session.
@@ -314,7 +314,7 @@ Delete current user session.
 Determine if current user returns true on decision guide.
 
 - Parameters :
-    - guide_id : String of Decision guide to use. Find your decision guides [here](https://www.orkiv.com/i/ai/#/guides)
+    - guide_id : String of decision guide id to use. Find your decision guides [here](https://www.orkiv.com/i/ai/#/guides)
 	- onFinish :  Function called once guide is evaluated. Function variable  isTrue is `bool` of guide evaluation.
 
 ### Inventory.prototype.Query(int page, object query, callback onFinish(data))
