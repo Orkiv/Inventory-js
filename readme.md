@@ -1,5 +1,5 @@
 ## Epic Commerce JS plugin
-![enter image description here](http://www.devpointlabs.com/assets/javascript/javascript-icon-59b52f096f36f476bbdfac982a25240583d483b1157b76771e59077025f62d38.png)  ![enter image description here](https://www.orkiv.com/images/inventory.png)
+![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logog.png) 
 
 ## Navigation
  
@@ -12,6 +12,8 @@
  6. [HTML UI](#drop-in-ui)
  7. [Additional customization](#inventory-object)
  8. [User management](#user-management)
+    9. [Eval customer metric](#inventoryprototypeevalstring-guide_id-callback-onfinishistrue)
+    10. [Record user interest](#inventoryprototypesaveintereststring-item) 
 
 ### Updates
 
