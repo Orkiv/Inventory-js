@@ -1,0 +1,27 @@
+{
+  "name": "epic-commerce",
+  "version": "1.0.0",
+  "description": "Build commerce UIs with javascript",
+  "main": "inventory.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Orkiv/Inventory-js.git"
+  },
+  "keywords": [
+    "commerce",
+    "ui",
+    "html5",
+    "ecommerce",
+    "javascript",
+    "ai"
+  ],
+  "author": "Orkiv",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Orkiv/Inventory-js/issues"
+  },
+  "homepage": "https://github.com/Orkiv/Inventory-js#readme"
+}

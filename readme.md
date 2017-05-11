@@ -30,6 +30,14 @@ Epic Commerce account
 
 ### Setup
 
+#### Install via bower
+
+		bower install epic-commerce
+
+#### Install via npm
+
+		npm install epic-commerce
+
 [Download](https://github.com/Orkiv/Inventory-js/archive/master.zip) this repository, unzip it and move it to your website root. 
 	
 	<script type="text/javascript" src="/your/path/inventory.min.js"></script>
