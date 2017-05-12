@@ -1329,8 +1329,10 @@ Inventory.prototype.showModal = function(){
       x[0].className += " faded";
       x[1].className+= " faded";    
       this.modal = true;
+        $inventoryStandard.modal = true;
         }
     }
+    
 
     if($(".inv-iframe-holder .inv-iframe-module").length > 0){
       $(".inv-iframe-holder .inv-iframe-module").css('display','none');
