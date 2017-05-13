@@ -1,4 +1,7 @@
 ## Epic Commerce JS plugin
+
+# NO SPEAK ENGLISH ? NO PROBLEM, [CLICK HERE](https://www.orkiv.com/tutorials/inventory/jsplugin/)
+
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logog.png) 
 
 Build ecommerce websites with the `Epic commerce` toolkit
