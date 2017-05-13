@@ -12,7 +12,7 @@ Build ecommerce websites with the `Epic commerce` toolkit
  4. [Access Wishlist](#wishlist)
  5. [Performing checkout](#checkout)
  6. [HTML UI](#drop-in-ui)
-	 7. [Item UI](#item-ui) 
+ 7. [Item UI](#item-ui) 
  7. [Additional customization](#inventory-object)
  8. [User management](#user-management)
  9.  [Inventory object](#inventory-object)
@@ -20,6 +20,7 @@ Build ecommerce websites with the `Epic commerce` toolkit
  11. [JS RESTful functions](#js-restful-functions)
  9. [Eval customer metric](#inventoryprototypeevalstring-guide_id-callback-onfinishistrue)
  10. [Record user interest](#inventoryprototypesaveintereststring-item) 
+ 11. [REST API](#rest-api)
 
 ### Updates
 
