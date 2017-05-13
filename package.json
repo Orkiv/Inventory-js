@@ -1,6 +1,6 @@
 {
   "name": "epic-commerce",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Build commerce UIs with javascript",
   "main": "inventory.js",
   "scripts": {
