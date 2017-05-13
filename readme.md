@@ -1,6 +1,8 @@
 ## Epic Commerce JS plugin
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logog.png) 
 
+Build ecommerce websites with the `Epic commerce` toolkit
+
 ## Navigation
  
 
@@ -10,10 +12,14 @@
  4. [Access Wishlist](#wishlist)
  5. [Performing checkout](#checkout)
  6. [HTML UI](#drop-in-ui)
+	 7. [Item UI](#item-ui) 
  7. [Additional customization](#inventory-object)
  8. [User management](#user-management)
-    9. [Eval customer metric](#inventoryprototypeevalstring-guide_id-callback-onfinishistrue)
-    10. [Record user interest](#inventoryprototypesaveintereststring-item) 
+ 9.  [Inventory object](#inventory-object)
+ 10. [User management](#user-management)
+ 11. [JS RESTful functions](#js-restful-functions)
+ 9. [Eval customer metric](#inventoryprototypeevalstring-guide_id-callback-onfinishistrue)
+ 10. [Record user interest](#inventoryprototypesaveintereststring-item) 
 
 ### Updates
 
@@ -145,6 +151,11 @@ $inventory once initialized can be accessed via html elements. This enables quic
 
 Within your item or service viewer in the Inventory dashboard, you will also see a button with name snippet generator
 
+### Item ui 
+
+Item UI's allow for easy placement of item customization controls. This [function](#)) will place the following ui in the desired location.
+![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/ItemPage.png)
+
 ### Add to cart
 Adds the specified item to the current user's cart.
 
@@ -243,6 +254,11 @@ Additional initializations :
 
 ### Inventory(accountid, jstoken,alerts,syncdynamic)
 
+'accountid' is your account id obtained from the settings section within your epic commerce [portal](https://www.orkiv.com/i)
+
+
+'jstoken' is your front end key obtained from the settings section within your epic commerce [portal](https://www.orkiv.com/i)
+
 'alerts' decides how Inventory handles visual alert notifications. Setting it to false will revert to using a custom alert. If none is set no action is called.
 
 'syncdynamic' decides if inventory should add dynamism to Drop in UI buttons. This dynamism ranges from automatically changing an add to cart button to a 'remove from cart' button; and refelling cart combo boxes to previous value.
@@ -256,7 +272,7 @@ Additional initializations :
 
 This will set a custom alert. Please make sure alerts is set to false.
 
-### Inventory.prototype.GenID(itemid,['variations'])
+### Inventory.prototype.GenID(string itemid,['variations'])
 
 Generates a cart or wishlist id of the current itemid and variations supplied.
 
@@ -268,6 +284,13 @@ To display an editable view of your user's wish list use the `ShowWishlist` func
 
 To display an editable view of your user's cart use the `ShowWishlist` function.
 
+### Inventory.prototype.DefaultLayout(string itemid, string selector)
+
+Place full item customization form.
+
+- Parameters
+	- itemid : Valid inventory item id.
+	- selector : jQuery `css` selector of element to add item information to. 
 
 ## User management
 
@@ -289,7 +312,10 @@ Inventory JS supports out of the box basic user authentication. It works with th
 
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logtab.png)
 
-## Getting inventory Data
+### Inventory.prototype.DestroyUserinfo()
+Delete current user session.
+
+## JS RESTful functions
 
 The following functions can be used to retrieve inventory data from your account.
 
@@ -297,6 +323,7 @@ The following functions can be used to retrieve inventory data from your account
 Get reviews for the specified item.
 
 - Parameters :
+ 	- itemid : Valid inventory item to open
 	- onFinish: Function called once data is retrieved. Function variable  data has 4 keys :
 	- usercount :  integer of how many users have reviewed your product.
 	- rating : double of the specified item's average rating.
@@ -311,14 +338,21 @@ Fetch item categorization from your account.
 	- onFinish :  Function called once data is retrieved. Function variable  data has 1 key :
 		- result : Array of categories. Please refer to the [category schema](#category-schema) 
 
+### Inventory.prototype.Category(string cat_id,callback onFinish(data))
+Fetch item categorization from your account.
+
+- Parameters :
+	- cat_id : Valid inventory category id.
+	- onFinish :  Function called once data is retrieved. Function variable  data has 1 key :
+		- result : Data of requested category. Please refer to the [category schema](#category-schema) 
+
 ### Inventory.prototype.SaveInterest(string item)
 Add category or item to user interests.
 
 - Parameters :
  - item : String of item id to add to user interest. You may also use a category id  instead of an item id as well. The system will automatically add an item's parent to the user's interests. 
 
-### Inventory.prototype.DestroyUserinfo()
-Delete current user session.
+
 
 ### Inventory.prototype.Eval(string guide_id ,callback onFinish(isTrue))
 Determine if current user returns true on decision guide.
@@ -343,20 +377,22 @@ This function will return items which match the specified query.
 	- itemid : Valid inventory item to open
 	- onFinish : Function called once data is retrieved. Function variable keys :
 		- media : An array of URI strings
-		- result : Object of the requested item. Please refer to the [General schema](#general-schema)  
+		- result : Data of the requested item. Please refer to the [General schema](#general-schema)  
 
 
-## Category schema
+##Category schema
 
 ### Property list
 
 - string id : ID of inventory category.
 - string name : Name of inventory category.
+- The Following are not available with function `Inventory.prototype.Category` and Epic [restful](#restful-api) endpoints : 
 - string tmp : URI to image of an item under such category.
 - array children : Array of categories. Using the same schema.
 	- *With one key difference `tmp` is replaced by `sampleimage` 
 
-## General schema
+##General schema
+### (KNOWN AS ITEM)
 General schema is the minimum amount of data the platform will return. If you plan on using extra fields please refer to the custom set fields section below, for information on retrieving such data.
 
 ### Minimum data
@@ -387,3 +423,43 @@ Use the same name as set for field directly with your inventory item. This prope
 - ext_cat_search : A valid inventory category ID. This value will be used to find any subset of this category.
 - minp : Minimum price of an item allowed to be returned.
 - maxp : Maximum price of an item allowed to be returned.
+
+
+# RESTful API
+
+Here is a set of end points to help you retrieve data via api.
+
+## API information
+
+ - [Base url] : https://www.orkiv.com/i/ext_epic.php
+ - [Authentication headers]  
+	 -  `account` :  Your account id. ie : `{ "account" : YOUR_ACCOUNT_ID }` 
+ - [Response format] : `application/json` 
+
+
+## Endpoints
+
+### GET /category/{ID}/
+Get a category.
+
+- Parameters :
+ - id : ID of category to open.
+
+- Result :
+	- [Category](#category-schema) 
+
+### GET /categories/
+
+Get categories.
+- Result :
+	- [[Category](#category-schema) ... ] 
+
+### GET /item/{ID}/
+
+Get an item.
+
+- Parameters :
+ - id : ID of item to open.
+
+- Result :
+	- [Item](#general-schema) 
