@@ -2059,7 +2059,7 @@ var data = this.getLocal("inventoryData",true);
 }
 
 Inventory.prototype.FilterImages = function( cart_item , db_item){
-    var id = cart_item.id.split("%^}")[0];
+ //   var id = cart_item.id.split("%^}")[0];
     if(!db_item.gridvault ) return db_item.media;
     var newset = [];
     for (var i = db_item.media.length - 1; i >= 0; i--) {
@@ -2070,18 +2070,20 @@ Inventory.prototype.FilterImages = function( cart_item , db_item){
        //iterate choices
        //
        if(grid){
-       for (var o = cart_item.variations.length - 1; o >= 0 && add; o--) {
+       for (var o = cart_item.variations.length - 1; o >= 0 ; o--) {
            var set = cart_item.variations[o].split(":");
+           // console.log(cart_item)
            if(set.length == 2){
                 if(grid[set[0]] !=  set[1]){
                         add = false;
                 }
            }
        };
-     }
-       if(add) {
+        if(add) {
         newset.push(db_item.media[i]);
        }
+     }
+      
 
     };
     return newset;
@@ -2123,6 +2125,7 @@ function MakeDiv(inv , targ){
                  $(".sku",itemscheme).html(inv.sku); 
              $(".add-f",itemscheme).append("<p><b>Category / </b> <span class='drop-cat-dist'>Loading</span></p>"); 
                 $item_temp = inv;
+                $item_temp.media_b = inv.media;
                 $inventoryStandard.Category(inv.category, function(data){
                     $(".drop-cat-dist").html(data.result.name);
                 } )
@@ -2179,10 +2182,11 @@ function updateItemLayout(){
 
                         if($(this).val() != ""){
                             var cname = $(this).attr("name") + ":" +  $(this).val();
+                                  $item_temp.setvars.push(cname);
                             var variation = getVar($item_temp.variations, cname);
                             if(variation){
                                 if(variation.type == "add"){
-                                    $item_temp.setvars.push(cname);
+                              
                                     price += variation.priceChange;
                                 }
                             }
@@ -2190,24 +2194,36 @@ function updateItemLayout(){
                     });
 
                 $(".inventory-realm .choice").each(function(e,i){
+
                         if($(this).val() != ""){
+
                              var cname = $(this).attr("name") + ":" +  $(this).val();
+                                  $item_temp.setvars.push(cname);
                             var variation = getVar($item_temp.variations, $(this).attr("name"));
                             if(variation){
+                                console.log(variation)
                                 if(variation.type != "add"){
-                                     $item_temp.setvars.push(cname);
+                                
                                     price = variation.priceChange;
                                 }
                             }
                         }
                     });
-                 console.log(price);
+                    
+               
+                 $item_temp.media = $item_temp.media_b;
+                  
+                 $item_temp.media = $inventoryStandard.FilterImages({variations : $item_temp.setvars, id: $item_temp.id}, $item_temp);
+                  console.log( $item_temp.media);
+                    $("[data-zoom-image]").css('opacity', '0.2');
+                    for (var i = $item_temp.media.length - 1; i >= 0; i--) {
+                       $(".inventory-realm-class-input [src='" + $item_temp.media[i] + "']" ).css("opacity","1");
+                    };
                   $(".inventory-realm .drop-price").html( ( price /100 ) .formatMoney(2,".", ",")); 
 
 }
 function getVar(set, name){
-
-    for (var i = set.length - 1; i >= 0; i--) {
+           for (var i = set.length - 1; i >= 0; i--) {
         if(set[i].name == name ){
             return set[i];
         }
