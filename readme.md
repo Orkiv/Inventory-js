@@ -239,7 +239,7 @@ Opens a checkout window with the specified user quantity
 	Inventory.prototype.Checkout()
 
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/cart.png)
-To display an editable view of your user's cart use the `Checkout` function.
+To display an editable view of your user's cart.
 
 
 ### Display editable user Wishlist 
@@ -247,7 +247,7 @@ To display an editable view of your user's cart use the `Checkout` function.
 	Inventory.prototype.ShowWishlist()
 
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/wishlist.png)
-To display an editable view of your user's wish list use the `ShowWishlist` function.
+To display an editable view of your user's wish list.
 
 ## Inventory Object
 
@@ -255,14 +255,16 @@ Additional initializations :
 
 ### Inventory(accountid, jstoken,alerts,syncdynamic)
 
-'accountid' is your account id obtained from the settings section within your epic commerce [portal](https://www.orkiv.com/i)
+Parameters : 
+
+`accountid` is your account id obtained from the settings section within your epic commerce [portal](https://www.orkiv.com/i)
 
 
-'jstoken' is your front end key obtained from the settings section within your epic commerce [portal](https://www.orkiv.com/i)
+`jstoken` is your front end key obtained from the settings section within your epic commerce [portal](https://www.orkiv.com/i)
 
-'alerts' decides how Inventory handles visual alert notifications. Setting it to false will revert to using a custom alert. If none is set no action is called.
+`alerts` decides how Inventory handles visual alert notifications. Setting it to false will revert to using a custom alert. If none is set no action is called.
 
-'syncdynamic' decides if inventory should add dynamism to Drop in UI buttons. This dynamism ranges from automatically changing an add to cart button to a 'remove from cart' button; and refelling cart combo boxes to previous value.
+`syncdynamic` decides if inventory should add dynamism to Drop in UI buttons. This dynamism ranges from automatically changing an add to cart button to a 'remove from cart' button; and refelling cart combo boxes to previous value.
 		
 	<script>
 			$inventory = new Inventory('accountid', 'frontendkey',true,true);
@@ -279,11 +281,11 @@ Generates a cart or wishlist id of the current itemid and variations supplied.
 
 ### Inventory.prototype.ShowWishlist()
 
-To display an editable view of your user's wish list use the `ShowWishlist` function.
+To display an editable view of your user's wish list.
 
 ### Inventory.prototype.Checkout()
 
-To display an editable view of your user's cart use the `ShowWishlist` function.
+To display an editable view of your user's cart.
 
 ### Inventory.prototype.DefaultLayout(string itemid, string selector)
 
