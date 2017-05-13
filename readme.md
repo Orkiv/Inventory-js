@@ -380,7 +380,7 @@ This function will return items which match the specified query.
 		- result : Data of the requested item. Please refer to the [General schema](#general-schema)  
 
 
-##Category schema
+## Category schema
 
 ### Property list
 
@@ -391,7 +391,7 @@ This function will return items which match the specified query.
 - array children : Array of categories. Using the same schema.
 	- *With one key difference `tmp` is replaced by `sampleimage` 
 
-##General schema
+## General schema
 ### (KNOWN AS ITEM)
 General schema is the minimum amount of data the platform will return. If you plan on using extra fields please refer to the custom set fields section below, for information on retrieving such data.
 
