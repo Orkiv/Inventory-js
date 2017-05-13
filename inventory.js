@@ -2114,7 +2114,7 @@ var n = this,
    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
  };
 function MakeDiv(inv , targ){
-        var itemscheme = $('<div style="clear:both;padding:10px;width:100%;"><div class="item-images"></div><div style="clear:both"></div><div class="item-body"><h1 class="name"> </h1><h3 class=""><b>Price </b> <span class="price drop-price"></span></h3><p class=""><b>Tags / </b> <span class="tags"></span></p> <p class=""><b> SKU / </b><span class="sku"></span></p> <div class="add-f"></div> <div class="desc"></div> </div></div>');
+        var itemscheme = $('<div style="clear:both;padding:10px;width:100%;"><div class="item-images"></div><div style="clear:both"></div><div class="item-body"><h1 class="name"> </h1><h3 class=""><b>Price </b> <span class="price drop-price label-primary"></span></h3><p class=""><span class="tags"></span></p> <p class=""><b> SKU / </b><span class="sku"></span></p> <div class="add-f"></div> <div class="desc"></div> </div></div>');
         for (var i = inv.media.length - 1; i >= 0; i--) {
             $(".item-images" , itemscheme ).append( '<img data-zoom-image="' + inv.media[i] +'" src="' + inv.media[i] + '" style="    float: left;height: 70px;margin: 10px;width: initial;"/>'  );
         };
@@ -2123,7 +2123,7 @@ function MakeDiv(inv , targ){
                 $(".tags",itemscheme).html(inv.tags);
                   $(".price",itemscheme).html( ( inv.ordprice /100 ) .formatMoney(2,".", ",")); 
                  $(".sku",itemscheme).html(inv.sku); 
-             $(".add-f",itemscheme).append("<p><b>Category / </b> <span class='drop-cat-dist'>Loading</span></p>"); 
+             $(".add-f",itemscheme).append("<p><b> <i class='fa fa-circle'></i> </b> <span class='drop-cat-dist'>Loading</span></p>"); 
                 $item_temp = inv;
                 $item_temp.media_b = inv.media;
                 $inventoryStandard.Category(inv.category, function(data){
@@ -2155,22 +2155,29 @@ function MakeDiv(inv , targ){
                   }
                 }
 
-                      $(".item-body" , itemscheme).append('<div style="margin-bottom:10px;" class="item-cart-count inventory-form-group" data-type="cart" data-id="57762fe070f8172e083c1792"><input min="0" type="number" data-isf="amt" placeholder="Amount" /><button class="item-cart sync-orkivinv" ><i class="fa fa-shopping-cart"></i></button></div>');
-                   $(".item-body" , itemscheme).append('<div class="inventory-form-group item-buy-count" data-type="cart" data-id="57762fe070f8172e083c1792"><input min="0" type="number" data-isf="amt" placeholder="Amount" /><button class="sync-orkivinv item-buy" ><i class="fa fa-credit-card"></i></button></div>');
+                      $(".item-body" , itemscheme).append('<div style="margin-bottom:10px;" class=" inventory-form-group" data-type="cart" data-id="57762fe070f8172e083c1792"><input min="0" type="number" data-isf="amt" class="item-cart-count" placeholder="Amount" /><button class="item-cart sync-orkivinv" ><i class="fa fa-shopping-cart"></i></button></div>');
+                   $(".item-body" , itemscheme).append('<div class="inventory-form-group" data-type="cart" data-id="57762fe070f8172e083c1792"><input min="0" type="number" data-isf="amt" placeholder="Amount" class="item-buy-count" /><button class="sync-orkivinv item-buy" ><i class="fa fa-credit-card"></i></button></div>');
               $(targ).append(itemscheme);
               $(".inventory-realm .item-buy").click(function(){
-
-                $inventoryStandard.Buy($item_temp.id, parseInt( $(".item-buy-count").val() ) ,$item_temp.setvars  )
+                if(!$item_temp.setvars) return;
+                if(   $(".inventory-realm .choice").length == $item_temp.setvars.length)
+                $inventoryStandard.Buy($item_temp.id , parseInt( $(".inventory-realm-class-input .item-buy-count").val() ) ,$item_temp.setvars  )
               });
                 $(".inventory-realm .item-cart").click(function(){
 
-                $inventoryStandard.Cart($item_temp.id, parseInt( $(".item-cart-count").val() ) ,$item_temp.setvars  )
+                    if(!$item_temp.setvars) return;
+
+                    if(   $(".inventory-realm .choice").length == $item_temp.setvars.length)
+                $inventoryStandard.Cart($item_temp.id  , parseInt( $(".inventory-realm-class-input .item-cart-count").val() ) ,$item_temp.setvars  )
               });
               $(".inventory-realm .choice").change(function(){
                 //setTimeout(function(){
                     updateItemLayout();
                
               })
+              if(  $(".inventory-realm .choice").length > 0 ){
+                  $(".inventory-realm .drop-price").html("Customize your item first.");
+              }
               $("[data-zoom-image]").elevateZoom();
 }
 
@@ -2178,15 +2185,17 @@ function updateItemLayout(){
    //     alert("hey");
                    var price = $item_temp.ordprice;
                  $item_temp.setvars = [];
+               //  var setvars = [];
                 $(".inventory-realm .choice").each(function(e,i){
 
                         if($(this).val() != ""){
                             var cname = $(this).attr("name") + ":" +  $(this).val();
+                                 if($item_temp.setvars.indexOf(cname) == -1)
                                   $item_temp.setvars.push(cname);
                             var variation = getVar($item_temp.variations, cname);
                             if(variation){
                                 if(variation.type == "add"){
-                              
+                           
                                     price += variation.priceChange;
                                 }
                             }
@@ -2198,10 +2207,11 @@ function updateItemLayout(){
                         if($(this).val() != ""){
 
                              var cname = $(this).attr("name") + ":" +  $(this).val();
+                             if($item_temp.setvars.indexOf(cname) == -1)
                                   $item_temp.setvars.push(cname);
                             var variation = getVar($item_temp.variations, $(this).attr("name"));
                             if(variation){
-                                console.log(variation)
+                                
                                 if(variation.type != "add"){
                                 
                                     price = variation.priceChange;
@@ -2219,7 +2229,12 @@ function updateItemLayout(){
                     for (var i = $item_temp.media.length - 1; i >= 0; i--) {
                        $(".inventory-realm-class-input [src='" + $item_temp.media[i] + "']" ).css("opacity","1");
                     };
-                  $(".inventory-realm .drop-price").html( ( price /100 ) .formatMoney(2,".", ",")); 
+                    if(   $(".inventory-realm .choice").length == $item_temp.setvars.length){
+                         $(".inventory-realm .drop-price").html( ( price /100 ) .formatMoney(2,".", ",")); 
+                    } else {
+                           $(".inventory-realm .drop-price").html("Customize your item first.");
+                    }
+                 
 
 }
 function getVar(set, name){

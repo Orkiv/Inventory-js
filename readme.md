@@ -154,7 +154,7 @@ Within your item or service viewer in the Inventory dashboard, you will also see
 
 ### Item ui 
 
-Item UI's allow for easy placement of item customization controls. This [function](#inventoryprototypedefaultlayoutstring-itemid-string-selector) will place the following ui in the desired location.
+Item UI's allow for easy placement of item customization controls. This [function](#inventoryprototypedefaultlayoutstring-itemid-string-selector) will place the following ui in the desired location. The UI will handle item customizations and checkout options.
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/ItemPage.png)
 
 ### Add to cart
