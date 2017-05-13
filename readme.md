@@ -406,7 +406,8 @@ Here are some properties of an item object.
 - array variations : Array of item variations. Here is the property list of a variation : 
 	- string id : ID of variation.
 	- string name : Name of variation.
-	- int priceChange : New price of item in hundreds. 
+	- int priceChange : New price of item in hundreds.
+	- string type : add | replace 
 
 ### Custom set fields.
 
