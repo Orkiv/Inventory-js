@@ -20,7 +20,7 @@ Build ecommerce websites with the `Epic commerce` toolkit
  11. [JS RESTful functions](#js-restful-functions)
  9. [Eval customer metric](#inventoryprototypeevalstring-guide_id-callback-onfinishistrue)
  10. [Record user interest](#inventoryprototypesaveintereststring-item) 
- 11. [REST API](#rest-api)
+ 11. [REST API](#restful-api)
 
 ### Updates
 
