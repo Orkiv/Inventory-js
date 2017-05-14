@@ -683,7 +683,8 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
         var target = $(selector), socialbutton = $('<a href="" class="sync-orkivinv" ><i class="fa fa-facebook"></i> Facebook </a>');
         if(!target.hasClass('inventory-realm')){
             //create element
-            target.html('<div classs="column one-half"><h1><i class="fa fa-user"></i> Login</h1> <div class="inventory-form-group" style="margin-bottom:10px;"><input type="text" style="width: 260px;" placeholder="Email"><span style="float:left;height:48px;border-radius:0;" class="sync-orkivinv">@</span></div> <div class="inventory-form-group" style="margin-bottom:10px;"> <input type="password" style="width: 260px;" placeholder="Password"><span style="float:left;height:48px;border-radius:0;" class="sync-orkivinv"><i class="fa fa-lock"></i></span></div><p><button class="init-email sync-orkivinv">Login</button></p><p><button class="init-signup sync-orkivinv">Join</button> <button class="init-passrecovery sync-orkivinv">Forgot password?</button></p><div class="additional-fields" style="display:none;"></div><div class="social-prompts" style="text-align:center"><p>Login via a social media provider</p></div><div class="social-options" style="text-align:center"></div></div>');
+            target.addClass("inventory-realm");
+            target.html('<div classs="column one-half"> <h1><i class="fa fa-user"></i> Login</h1><div class="inventory-form-group" style="margin-bottom:10px;" > <input type="text" style="width: 260px;" name="email"  placeholder="Email"> <span style="float:left;height:48px;border-radius:0;" class="sync-orkivinv">@</span> </div> <div class="inventory-form-group" style="margin-bottom:10px;" > <input type="password" name="password" style="width: 260px;"  placeholder="Password"> <span style="float:left;height:48px;border-radius:0;" class="sync-orkivinv"><i class="fa fa-lock"></i></span>  </div> <div class="additional-fields" style="display:none;"> </div><p><button class="init-email sync-orkivinv">Login</button></p><p><button class="init-signup sync-orkivinv">Join</button> <button class="init-passrecovery sync-orkivinv">Forgot password?</button></p> <div class="social-prompts" style="text-align:center"> <p>Login via a social media provider</p></div> <div class="social-options" style="text-align:center"><a href="" class="sync-orkivinv" target="_blank"><i class="fa fa-facebook"></i> Facebook </a>  </div> </div>');
         } 
         target.children('div').css('display','none');
       
@@ -702,6 +703,8 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
               target.append("<p style='text-align:center;' class=\"loader-temp\"><i class='fa fa-spin fa-3x fa-cog'></i></p>");
 
         $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?verifySession=" + $inventoryStandard.accountid,type:"POST", data:{origin: window.location.href.split("?")[0],sessionid:window.localStorage["inventoryID"]}, success:function(html){
+
+        	var target = $(selector);
                     var data = JSON.parse(html);
                     if(data.auth){
                         //show logout prompt
@@ -786,7 +789,9 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
                     $(".social-prompts", target).prepend("<p>Signing onto Orkiv inventory implies consent to our <a href='https://www.orkiv.com/support/tos/' target='_blank'>terms of use</a></p>");
 
                     $(".init-signup", target).click(function(){
+
                           var target= $(this).parents(".inventory-realm");
+
                            if($("input[name='password']", target).css("display") == "none"){
                             $(".init-signup", target).html($(".init-signup", target).attr("past-html"));
                                  $(".social-prompts, .social-options", target).css('display', 'block');
