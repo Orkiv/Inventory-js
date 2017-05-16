@@ -710,3 +710,17 @@ Get an item.
 
 - Result :
 	- [Item](#general-schema) 
+
+### POST /redeem/
+
+Reduce user's points. The format of this request is  `application/json`. Please make sure to submit your json as a post body.
+
+- Parameters :
+ - `string token : ` Access token of user to target.
+ - `int reduce: ` Points to remove from current user balance.
+
+ - Result :
+
+  - The request will return a `json` object with the following properties: 
+  - `bool success: ` This wil return false if the user was not found, or they do not have enough points. 
+
