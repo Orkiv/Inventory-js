@@ -722,5 +722,5 @@ Reduce user's points. The format of this request is  `application/json`. Please 
  - Result :
 
   - The request will return a `json` object with the following properties: 
-  - `bool success: ` This wil return false if the user was not found, or they do not have enough points. 
+  - `bool success: ` This wil return false if the user was not found, or the user doesn't have enough points. 
 
