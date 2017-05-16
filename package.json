@@ -1,8 +1,8 @@
 {
   "name": "epic-commerce",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Build commerce UIs with javascript",
-  "main": "inventory.js",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,5 +23,5 @@
   "bugs": {
     "url": "https://github.com/Orkiv/Inventory-js/issues"
   },
-  "homepage": "https://github.com/Orkiv/Inventory-js#readme"
+  "homepage": "https://www.orkiv.com/epic-commerce"
 }

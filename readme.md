@@ -2,6 +2,8 @@
 
 # NO SPEAK ENGLISH ? NO PROBLEM, [CLICK HERE](https://www.orkiv.com/tutorials/inventory/jsplugin/)
 
+# FULL API DOC [HERE](https://www.orkiv.com/tutorials/inventory/jsplugin/)
+
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logog.png) 
 
 Build ecommerce websites with the `Epic commerce` toolkit
@@ -24,18 +26,25 @@ Build ecommerce websites with the `Epic commerce` toolkit
  9. [Eval customer metric](#inventoryprototypeevalstring-guide_id-callback-onfinishistrue)
  10. [Record user interest](#inventoryprototypesaveintereststring-item) 
  11. [REST API](#restful-api)
+ 12. [One click checkout](#one-click-checkout)
+ 13. [Credit card management](#credit-card-management)
+ 14. [Location management](#location-management)
+ 15. [User data manipulation](#user-account-data-manipulation)
+ 16. [Social media SSO](#social-media-sso)
 
 ### Updates
 
- - User login support
- - Wishlist Sharing
- - Social media Sign in
- 
+ - User login support.
+ - Wishlist Sharing.
+ - Social media SSO support.
+ - One Click checkout.
+ - User credit card management.
+ - User address management ( [Locations](#location-management) ).
 
 ### Requirements
 
-Inventory JS requires `jQuery 1.9+`
-Epic Commerce account
+- Inventory JS requires `jQuery 1.9+`.
+- Epic Commerce account
 
 
 ### Setup
@@ -52,7 +61,7 @@ Epic Commerce account
 	
 	<script type="text/javascript" src="/your/path/inventory.min.js"></script>
 
-Or host this one on us :
+Or host this one with [Orkiv](https://www.orkiv.com) :
 
 	<script type="text/javascript" src="https://www.orkiv.com/i/inventory.js"></script>
 
@@ -159,6 +168,13 @@ Within your item or service viewer in the Inventory dashboard, you will also see
 
 Item UI's allow for easy placement of item customization controls. This [function](#inventoryprototypedefaultlayoutstring-itemid-string-selector) will place the following ui in the desired location. The UI will handle item customizations and checkout options.
 ![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/ItemPage.png)
+
+### Item images
+
+Place your item images with this [function](#inventoryprototypeimagegridstring-itemid-string-selector-array-variations).
+
+Example : 
+![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/slideshow.png)
 
 ### Add to cart
 Adds the specified item to the current user's cart.
@@ -298,11 +314,22 @@ Place full item customization form.
 	- itemid : Valid inventory item id.
 	- selector : jQuery `css` selector of element to add item information to. 
 
+### Inventory.prototype.ImageGrid(string itemid, string selector, array variations)
+
+Place item images.
+
+- Parameters:
+	- `string itemid: `commerce item id.
+	- ` string selector: `jQuery `css` selector to add image grid to.
+	- ` array variations: `Array of `string` with item variables.
+
+** Important note: once your images are loaded, using the function again will filter images to appropriate variations.
+
 ## User management
 
 Inventory JS supports out of the box basic user authentication. It works with the parameters defined within Inventory to help you convert visitors to returning customers.
 
-### Inventory.prototype.user - Object
+### object Inventory.prototype.user
 
 	- Information about user
 	- Any custom set key within Epic commerce's interfaces will be available within this object.
@@ -320,6 +347,152 @@ Inventory JS supports out of the box basic user authentication. It works with th
 
 ### Inventory.prototype.DestroyUserinfo()
 Delete current user session.
+
+## One click checkout
+
+One click is a checkout mode in which your user does not have enter any information. They still must confirm the shipping address as well as shipping options.
+
+### Inventory.prototype.OneClick()
+
+Open client checkout. With this option your client does not have to enter billing information.
+
+## Credit card management
+
+### Inventory.prototype.Addcard()
+
+Open form to save credit card.
+
+### Inventory.prototype.Cards(function callback(array cards) )
+
+Get credit cards of the current user.
+
+- Parameters
+ - `function callback: `Function called once data is retrieved. `cards` is an array of [cards](#card) 
+
+### Inventory.prototype.DefaultCard(string id, function callback (bool done) )
+
+Set specified card id as default card to use with `OneClick`.
+
+- Parameters
+	- `string id: `ID of card to make default.
+	- ` function callback: `function to call once operation is complete. `bool done: ` Indication on success of operation. 
+
+### Inventory.prototype.RemoveCard(string id, function callback (bool done) )
+
+Remove card.
+
+- Parameters
+	- `string id: `ID of card to remove.
+	- `function callback: ` Function called once data is retrieved. `bool done :` Indication on success of operation.  
+
+## Location management
+
+### Inventory.prototype.AddLocation()
+
+Open form to add a new shipping location for user.
+### Inventory.prototype.Locations(function callback(array locations))
+
+Get locations of the current user.
+
+- Parameters
+ - `function callback: `Function called once data is retrieved. `locations` is an array of [locations](#location) 
+
+### Inventory.prototype.DefaultLocation(string id, function callback (bool done) )
+
+Set specified location id as default location to use with `OneClick`.
+
+- Parameters
+	- `string id: `ID of location to make default.
+	- ` function callback: `function to call once operation is complete. `bool done: ` Indication on success of operation. 
+
+### Inventory.prototype.RemoveLocation(string id, function callback (bool done) )
+
+Remove location.
+
+- Parameters
+	- `string id: `ID of address to remove.
+	- `function callback: ` Function called once data is retrieved. `bool done :` Indication on success of operation.  
+
+
+## User account data manipulation
+
+### bool Inventory.prototype.LoggedIn()
+
+Returns true if the person on the site is logged in.
+
+### Inventory.prototype.UpdatePassword(string current, string new, function callback(bool done, string error_reason) )
+
+Update user password.
+
+- Parameters
+	- `string current: `The current password of the user.
+	- `string new: `New password to set.
+	- `function callback` : Function called once data is retrieved. `bool done: ` Indication on success of operation. `string error_reason: ` If `done` is false, this string will specify why.  You may also use `function callback(bool done)`.
+
+### Inventory.prototype.UpdateAccount(object user_data, function callback(bool done, string error_reason))
+ 
+ Update user account properties. Refer to the [user](#user) schema for system fields. You may also add custom properties. 
+
+- Parameters
+	- `object user: ` user information to save.
+	- `function callback: ` Function called once data is retrieved. `bool done: ` Indication on success of operation. `string error_reason: ` If `done` is false, this string will specify why.
+
+### Inventory.prototype.Login(string username, string password, function callback(bool success, object user ) )
+
+Create a new user session.
+
+- Parameters
+	- `string username: ` Email address of user to log in.
+	- `string password: ` Password of user. 
+	- `function callback: `Function called once data is retrieved. `bool success: `Returns false if the username/password is incorrect. `object user: ` Refer to the [user](#user) schema.
+
+### Inventory.prototype.Register(object payload, function callback(bool success, object user))
+
+Create a new user.
+
+- Parameters
+	 - `object payload: `Refer to the [user](#user) schema. 
+	 - `function callback: `Function called once data is retrieved. `bool success: `Returns false if the user could not join.  `object user: ` Refer to the [user](#user) schema. 
+	 - ** On `success` being false, the user object will have a property `reason`, stating why the registration failed.
+
+### Inventory.prototype.ResetPassword(string username, function callback(bool success) )
+
+Send a new password to the user via email.
+
+- Parameters
+	- `string username: `Username to send reset password to.
+	-   	 - `function callback: `Function called once data is retrieved. `bool success: `Returns false if the username is not a current user. 
+
+### Inventory.prototype.GetUserfields(function callback(array fields))
+
+List user  properties, set from `Epic commerce`.
+
+- Parameters
+	- `function callback: ` Function called once data is retrieved. `array fields: `Array of [fields](#field).
+
+## Social media SSO
+
+### Inventory.prototype.GetFacebookSSO(function callback(string url ))
+
+Get Facebook single sign on url. Allow your user to log in with Facebook.
+
+- Parameters
+	- `function callback: ` Function called once data is retrieved. `string url: ` URL to SSO portal. 
+
+### Inventory.prototype.GetTwitterSSO(function callback(string url )) 
+
+Get Twitter single sign on url. Allow your user to log in with Twitter.
+
+- Parameters
+	- `function callback: ` Function called once data is retrieved. `string url: ` URL to SSO portal. 
+	
+### Inventory.prototype.GetGoogleSSO(function callback(string url) )
+
+Get  Google single sign on url. Allow your user to log in with Google.
+
+- Parameters
+	- `function callback: ` Function called once data is retrieved. `string url: ` URL to SSO portal. 
+
 
 ## JS RESTful functions
 
@@ -385,6 +558,73 @@ This function will return items which match the specified query.
 		- media : An array of URI strings
 		- result : Data of the requested item. Please refer to the [General schema](#general-schema)  
 
+
+## User
+
+### Property list
+
+#### Additional fields.
+
+Additional [fields](#field)  can be used. Please remember to use the field name as the property name.
+
+#### System generated properties
+
+- `string profileimagelink: ` Public url to user's profile image.
+- `bool cart_notified: ` true if user received an abandoned cart email.
+- `bool oneclick_ready: ` true if user has a default location and card set.
+- `int loyaltypoints: ` Loyalty points of current user.
+- `string masterToken: ` Access token of user.
+
+#### Registration
+
+The following properties are required during registration. 
+
+- `string username: `Valid email.
+- `string password: ` User password.
+
+#### Account updates
+
+The following properties, when set, will trigger specific backend functionality.
+
+- `string profilepicture: ` Base64 of image to set as the user's profile picture.
+- `bool oneclick: ` Enable `One Click` checkout option.
+
+## Card
+
+Card of user.
+
+### Property list
+
+- `string id: `ID of card.
+- `bool default: `If this card is the user's default.
+- `string nickname: `Nickname of card.
+
+## Location
+
+Address of a user.
+
+### Property list
+
+- `string id: ` ID of location.
+- `bool default: `If this location is the user's default.
+- `string line_1: ` Line 1 of address.
+- `string line_2: ` Line 2 of address.
+- `string city: ` City.
+- `string state: ` State/Region.
+- `string zip: ` Zip code.
+- `string country: ` Country code.
+
+## Field
+
+A custom user property, set within `Epic commerce`.
+
+### Property list
+
+- `bool required: `If this field should be validated.
+- `string placeholder: ` Placeholder of field.
+- `string name: ` Name of field. Used as property name within a [User](#user)
+- `string type: ` Type of field. 6 types : `text` | `Number` | `phone` | `select` | `checkbox` | `radio`
+- `array choices: ` Array of `string` with field options. This property is true when the field type is set to `select`, `radio`.
 
 ## Category schema
 

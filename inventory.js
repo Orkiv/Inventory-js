@@ -1772,6 +1772,25 @@ Inventory.prototype.addCart = function(itemid,quantity,variations) {
 
 };
 
+ 		 Inventory.prototype.DefaultCard = function(id , callback)  { 
+                           $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?setdefaultcard=" + $inventoryStandard.accountid,type:"POST",data:{ id: id,sessionid:window.localStorage["inventoryID"], token:window.localStorage['masterToken']}, success:function(html){
+                                   var data = JSON.parse(html);
+                                   callback(data.auth);
+                                    
+                            } 
+                    });
+                       } 
+
+              Inventory.prototype.DefaultLocation = function(id, callback) {
+
+                         $.ajax({url:"https://www.orkiv.com/i/ext_js_api.php?setdefaultaddress=" + $inventoryStandard.accountid,type:"POST",data:{ id: id,sessionid:window.localStorage["inventoryID"], token:window.localStorage['masterToken']}, success:function(html){
+                                   var data = JSON.parse(html);
+                                      callback(data.auth);
+                            } 
+                           });
+
+                     } 
+
 function GetCardNSuch(){
     //atl-card 
      if(window.localStorage['masterToken'] && $(".invc.atl-card").length > 0)

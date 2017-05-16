@@ -1,12 +1,12 @@
 {
   "name": "epic-commerce",
-  "version" : "1.0.5"
-  "homepage": "https://github.com/Orkiv/Inventory-js",
+  "version" : "1.0.6"
+  "homepage": "https://www.orkiv.com/epic-commerce",
   "authors": [
     "Orkiv"
   ],
   "description": "Build commerce UIs with javascript",
-  "main": "inventory.js",
+  "main": "",
   "keywords": [
     "commerce",
     "js",
