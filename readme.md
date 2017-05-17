@@ -283,7 +283,7 @@ Parameters :
 
 `alerts` decides how Inventory handles visual alert notifications. Setting it to false will revert to using a custom alert. If none is set no action is called.
 
-`syncdynamic` decides if inventory should add dynamism to Drop in UI buttons. This dynamism ranges from automatically changing an add to cart button to a 'remove from cart' button; and refelling cart combo boxes to previous value.
+`syncdynamic` decides if inventory should add dynamism to Drop in UI buttons. This dynamism ranges from automatically changing an add to cart button to a 'remove from cart' button; and refilling cart combo boxes to previous value.
 		
 	<script>
 			$inventory = new Inventory('accountid', 'frontendkey',true,true);
