@@ -1387,11 +1387,6 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
 
 }   
 
-setInterval(function(){
-	if($inventoryStandard.accountid){
-		$inventoryStandard.SyncDynamic();
-	}
-}, 150);
 
 
 Inventory.prototype.SyncDynamic = function(){
@@ -2872,8 +2867,8 @@ function MakeDiv(inv , targ){
                   }
                 }
 
-                      $(".item-body" , itemscheme).append('<div style="margin-bottom:10px;" class=" inventory-form-group" data-type="cart" data-id="57762fe070f8172e083c1792"><input min="0" type="number" data-isf="amt" class="item-cart-count" placeholder="Amount" /><button class="item-cart sync-orkivinv" ><i class="fa fa-shopping-cart"></i></button></div>');
-                   $(".item-body" , itemscheme).append('<div class="inventory-form-group" data-type="cart" data-id="57762fe070f8172e083c1792"><input min="0" type="number" data-isf="amt" placeholder="Amount" class="item-buy-count" /><button class="sync-orkivinv item-buy" ><i class="fa fa-credit-card"></i></button></div>');
+                      $(".item-body" , itemscheme).append('<div style="margin-bottom:10px;" class=" inventory-form-group" data-type="cart" data-id="57762fe070f8172e083c1792"><input min="0" type="number" class="item-cart-count" placeholder="Amount" /><button class="item-cart sync-orkivinv" ><i class="fa fa-shopping-cart"></i></button></div>');
+                   $(".item-body" , itemscheme).append('<div class="inventory-form-group" data-type="cart" data-id="57762fe070f8172e083c1792"><input min="0" type="number"  placeholder="Amount" class="item-buy-count" /><button class="sync-orkivinv item-buy" ><i class="fa fa-credit-card"></i></button></div>');
               $(targ).append(itemscheme);
               $(".inventory-realm .item-buy").click(function(){
                 if(!$item_temp.setvars) return;
