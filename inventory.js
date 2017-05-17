@@ -855,20 +855,11 @@ function hideInventoryModal(){
    } else {
         $(".inv-iframe-holder-in").css('display','block');
         $(".inv-iframe-holder .inv-iframe-module").remove();
-
-           var x = document.getElementsByClassName("inv-to-fade");
-                    x[0].className = x[0].className.replace("faded","");
-                    x[1].className = x[1].className.replace("faded","");
-                    $inventoryStandard.modal = false;
-                 document.getElementById("InventoryIframe").src = "https://orkiv.com/i/loading.php";
+        $inventoryStandard.hideModal();
    }
       
     } else {
-      var x = document.getElementsByClassName("inv-to-fade");
-                    x[0].className = x[0].className.replace("faded","");
-                    x[1].className = x[1].className.replace("faded","");
-                    $inventoryStandard.modal = false;
-                 document.getElementById("InventoryIframe").src = "https://orkiv.com/i/loading.php";
+    	$inventoryStandard.hideModal();
     }
  
   
@@ -927,6 +918,7 @@ if (!Date.now) {
     Date.now = function() { return new Date().getTime(); }
 }
 
+var currencies = "BIF,CLP,DJF,GNF,JPY,KMF,KRW,MGA,PYG,RWF,VND,VUV,XAF,XOF,XPF".split(",");
 
 function Inventory(accountid, jstoken,alerts,syncdynamic) {
     this.accountid = accountid;
@@ -1394,6 +1386,12 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
         
 
 }   
+
+setInterval(function(){
+	if($inventoryStandard.accountid){
+		$inventoryStandard.SyncDynamic();
+	}
+}, 150);
 
 
 Inventory.prototype.SyncDynamic = function(){
@@ -1902,7 +1900,8 @@ Inventory.prototype.showModal = function(){
         }
     }
     
-
+    $temp_scroll = $("body").css("overflow");
+    $("body").css("overflow", "hidden");
     if($(".inv-iframe-holder .inv-iframe-module").length > 0){
       $(".inv-iframe-holder .inv-iframe-module").css('display','none');
        $(".inv-iframe-holder-in").css('display','block');
@@ -1911,7 +1910,7 @@ Inventory.prototype.showModal = function(){
 
 Inventory.prototype.hideModal = function(){
         
-
+	$("body").css("overflow", $temp_scroll);
          var x = document.getElementsByClassName("inv-to-fade");
       x[0].className = x[0].className.replace("faded","");
       x[1].className = x[1].className.replace("faded","");
@@ -2813,16 +2812,24 @@ Inventory.prototype.OneClick = function(){
     document.getElementById("InventoryIframe").src = basepage;
     }  
 }
+$currency = false;
+if(!Number.prototype.formatMoney){
+
 Number.prototype.formatMoney = function(c, d, t){
-var n = this, 
+
+	if(currencies.indexOf($currency)){
+		return this  + " " + $currency;
+	}
+var n = this/100, 
     c = isNaN(c = Math.abs(c)) ? 2 : c, 
     d = d == undefined ? "." : d, 
     t = t == undefined ? "," : t, 
     s = n < 0 ? "-" : "", 
     i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
     j = (j = i.length) > 3 ? j % 3 : 0;
-   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+   return $currency + " " + s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
  };
+}
 function MakeDiv(inv , targ){
         var itemscheme = $('<div style="clear:both;padding:10px;width:100%;"><div class="item-images"></div><div style="clear:both"></div><div class="item-body"><h1 class="name"> </h1><h3 class=""><b>Price </b> <span class="price drop-price label-primary"></span></h3><p class=""><span class="tags"></span></p> <p class=""><b> SKU / </b><span class="sku"></span></p> <div class="add-f"></div> <div class="desc"></div> </div></div>');
         for (var i = inv.media.length - 1; i >= 0; i--) {
@@ -2831,7 +2838,7 @@ function MakeDiv(inv , targ){
                $(".name", itemscheme).html(inv.name);
                $(".desc",itemscheme).html(inv.desc); 
                 $(".tags",itemscheme).html(inv.tags);
-                  $(".price",itemscheme).html( ( inv.ordprice /100 ) .formatMoney(2,".", ",")); 
+                  $(".price",itemscheme).html( ( inv.ordprice  ) .formatMoney(2,".", ",")); 
                  $(".sku",itemscheme).html(inv.sku); 
              $(".add-f",itemscheme).append("<p><b> <i class='fa fa-circle'></i> </b> <span class='drop-cat-dist'>Loading</span></p>"); 
                 $item_temp = inv;
@@ -2920,7 +2927,27 @@ function updateItemLayout(){
                    var price = $item_temp.ordprice;
                  $item_temp.setvars = [];
                //  var setvars = [];
+         
+
                 $(".inventory-realm .choice").each(function(e,i){
+
+                        if($(this).val() != ""){
+
+                             var cname = $(this).attr("name") + ":" +  $(this).val();
+                             if($item_temp.setvars.indexOf(cname) == -1)
+                                  $item_temp.setvars.push(cname);
+                            var variation = getVar($item_temp.variations, cname);
+                            if(variation){
+                                
+                                if(variation.type != "add"){
+                                
+                                    price = variation.priceChange;
+                                }
+                            }
+                        }
+                    });
+                    
+                           $(".inventory-realm .choice").each(function(e,i){
 
                         if($(this).val() != ""){
                             var cname = $(this).attr("name") + ":" +  $(this).val();
@@ -2935,25 +2962,6 @@ function updateItemLayout(){
                             }
                         }
                     });
-
-                $(".inventory-realm .choice").each(function(e,i){
-
-                        if($(this).val() != ""){
-
-                             var cname = $(this).attr("name") + ":" +  $(this).val();
-                             if($item_temp.setvars.indexOf(cname) == -1)
-                                  $item_temp.setvars.push(cname);
-                            var variation = getVar($item_temp.variations, $(this).attr("name"));
-                            if(variation){
-                                
-                                if(variation.type != "add"){
-                                
-                                    price = variation.priceChange;
-                                }
-                            }
-                        }
-                    });
-                    
                
                  $item_temp.media = $item_temp.media_b;
                   
@@ -2964,7 +2972,7 @@ function updateItemLayout(){
                        $(".inventory-realm-class-input [src='" + $item_temp.media[i] + "']" ).css("opacity","1");
                     };
                     if(   $(".inventory-realm .choice").length == $item_temp.setvars.length){
-                         $(".inventory-realm .drop-price").html( ( price /100 ) .formatMoney(2,".", ",")); 
+                         $(".inventory-realm .drop-price").html( ( price  ) .formatMoney(2,".", ",")); 
                     } else {
                            $(".inventory-realm .drop-price").html("Customize your item first.");
                     }
@@ -3071,7 +3079,7 @@ Inventory.prototype.Checkout = function() {
                     }
                 }
             });
-            $("h1" , $(".inv-iframe-module .subtotal")).html("$ " + (grandtotal/100).toFixed(2) );
+            $("h1" , $(".inv-iframe-module .subtotal")).html( (grandtotal).formatMoney(2,".", ","));
           }
 
         for (var v = data.result.length - 1; v >= 0; v--) {
@@ -3146,7 +3154,7 @@ Inventory.prototype.Checkout = function() {
 
 
           itemscheme.attr("inventory-cartid", inv.setid).attr("price", finalprice).attr("quantity", inv.setquantity);
-        $(".add-fields", itemscheme).append("<h1>" + inv.name + "</h1>").append("<h2>$ " + (finalprice/100).toFixed(2) + " </h2>").append( inv.setvariations.length > 0 ? '<p>Additional information : ' + inv.setvariations.join(",") + '</p>' : "").append('<p>Quantity</p><p><input type="number" placeholder="quantity" class="cart-quantity-update" value="' + inv.setquantity + '" min="1" max="' + inv.quantity +'"/><button class="remove-from-cart"><i class="fa fa-trash"></i> Remove from cart</button> <a href="' + inv.link +'">Open item</a></p>');
+        $(".add-fields", itemscheme).append("<h1>" + inv.name + "</h1>").append("<h2> " + (finalprice).formatMoney(2,".", ",") + " </h2>").append( inv.setvariations.length > 0 ? '<p>Additional information : ' + inv.setvariations.join(",") + '</p>' : "").append('<p>Quantity</p><p><input type="number" placeholder="quantity" class="cart-quantity-update" value="' + inv.setquantity + '" min="1" max="' + inv.quantity +'"/><button class="remove-from-cart"><i class="fa fa-trash"></i> Remove from cart</button> <a href="' + inv.link +'">Open item</a></p>');
         //delte from cart as well
               //update price vars, add deletet button
 

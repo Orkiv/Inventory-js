@@ -40,6 +40,7 @@ Build ecommerce websites with the `Epic commerce` toolkit
  - One Click checkout.
  - User credit card management.
  - User address management ( [Locations](#location-management) ).
+ - Multiple currency support.
 
 ### Requirements
 
