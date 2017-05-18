@@ -1388,29 +1388,30 @@ Inventory.prototype.CreateSocialSupport = function(selector, extraselectors){
 }   
 
 
+$global_cta = {wishr:"<i class='fa fa-bars'></i> Remove from Wishlist" ,carta: "<i class='fa fa-shopping-cart'></i> Cart",cartr: "<i class='fa fa-shopping-cart'></i> Remove from cart",wisha: "<i class='fa fa-bars'></i> Wishlist",cart: "CART"};
 
 Inventory.prototype.SyncDynamic = function(){
     if(this.syncdynamic){
 
-        $(".acu-sync-cart").html("CART (" + this.Data().cart.length + ")");
+        $(".acu-sync-cart").html( $global_cta.cart + " (" + this.Data().cart.length + ")");
     var x = document.getElementsByClassName("sync-dynamic");
         
       for (var i = x.length - 1; i >= 0; i--) {
         if(x[i].dataset.link == "cart"){
         if(this.In(x[i].dataset.link,x[i].dataset.id) ){
         if(x[i].scrollWidth > 129)
-            x[i].innerHTML = "<i class='fa fa-shopping-cart'></i> Remove from cart";
-         else  x[i].innerHTML = "&times; Cart";
+            x[i].innerHTML = $global_cta.cartr;
+         else  x[i].innerHTML = "&times; <i class='fa fa-shopping-cart'></i>";
         } else {
          if(x[i].scrollWidth > 129)
-            x[i].innerHTML = "<i class='fa fa-shopping-cart'></i> Add to cart";
-        else  x[i].innerHTML = "<i class='fa fa-shopping-cart'></i> Cart";
+            x[i].innerHTML = $global_cta.carta;
+        else  x[i].innerHTML = $global_cta.carta;
         }
         } else  if(x[i].dataset.link == "wishlist"){
             if(this.In(x[i].dataset.link,x[i].dataset.id ) ){
-            x[i].innerHTML = "<i class='fa fa-bars'></i> Remove from Wishlist";
+            x[i].innerHTML = $global_cta.wishr;
         } else {
-            x[i].innerHTML = "<i class='fa fa-bars'></i> Wishlist";
+            x[i].innerHTML = $global_cta.wisha;
         }
         }
       };
@@ -2201,7 +2202,7 @@ Inventory.prototype.ShowWishlistPublic = function(userid){
     shareablelink =  window.location.href.split("?")[0] + '?sharewishlist=' + window.localStorage['inventoryUSERID'];
     wishlistshare = '<div ><h2>Share your wishlist today!</h2><p>' + shareablelink  + '</p> <div class="iframe-jssocial-target"></div></div>';
    }
-   $(".inv-iframe-holder").append('<div class="inv-iframe-module inventory-realm" style="width:100%;background:#ededed;"><div class="column one-half cart-items"><div class="user-misc"></div></div><div class="column one-half subtotal"><p style="clear:both;text-align:center;padding:15px;"><button class="u-full-width" onclick="$inventory.Checkout()"><i class="fa fa-shopping-cart"></i> Checkout</button></p></div> <div style="clear:both"></div> ' + wishlistshare + ' </div>');
+   $(".inv-iframe-holder").append('<div class="inv-iframe-module inventory-realm" style="width:100%;background:#ededed;"><div class="column one-half cart-items"><div class="user-misc"></div></div><div class="column one-half subtotal"><p style="clear:both;text-align:center;padding:15px;"><button class="u-full-width" onclick="$inventoryStandard.Checkout()"><i class="fa fa-shopping-cart"></i> Checkout</button></p></div> <div style="clear:both"></div> ' + wishlistshare + ' </div>');
    if(window.localStorage['inventoryUSERID']){
     $(".iframe-jssocial-target").jsSocials({
             shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"],
@@ -2220,7 +2221,7 @@ Inventory.prototype.ShowWishlistPublic = function(userid){
         var data = JSON.parse(html);
      //  var data = {result:[]};
 
-    /*    var cartem = $inventory.Wishlist();
+    /*    var cartem = $inventoryStandard.Wishlist();
       var added = {};
        for (var i = cartem.length - 1; i >= 0; i--) {
             
@@ -2323,7 +2324,7 @@ Inventory.prototype.ShowWishlistPublic = function(userid){
                  $(".remove-from-cart" ,itemscheme).click(function(){
                 var cartitem = $(this).parents("[inventory-cartid]");
               cartitem.remove();
-                $inventory.RemoveFromWishlist(cartitem.attr("inventory-cartid") );
+                $inventoryStandard.RemoveFromWishlist(cartitem.attr("inventory-cartid") );
                
                 return false;
               });
@@ -2362,7 +2363,7 @@ Inventory.prototype.ShowWishlist = function(){
     shareablelink =  window.location.href.split("?")[0] + '?sharewishlist=' + window.localStorage['inventoryUSERID'];
     wishlistshare = '<div ><h2>Share your wishlist today!</h2><p>' + shareablelink  + '</p> <div class="iframe-jssocial-target"></div></div>';
    }
-   $(".inv-iframe-holder").append('<div class="inv-iframe-module inventory-realm" style="width:100%;background:#ededed;"><div class="column one-half cart-items"><h3><i class="fa fa-bars"></i> WISHLIST</h3></div><div class="column one-half subtotal"><p style="clear:both;text-align:center;padding:15px;"><button class="u-full-width" onclick="$inventory.Checkout()"><i class="fa fa-shopping-cart"></i> Checkout</button></p></div> <div style="clear:both"></div> ' + wishlistshare + ' </div>');
+   $(".inv-iframe-holder").append('<div class="inv-iframe-module inventory-realm" style="width:100%;background:#ededed;"><div class="column one-half cart-items"><h3><i class="fa fa-bars"></i> WISHLIST</h3></div><div class="column one-half subtotal"><p style="clear:both;text-align:center;padding:15px;"><button class="u-full-width" onclick="$inventoryStandard.Checkout()"><i class="fa fa-shopping-cart"></i> Checkout</button></p></div> <div style="clear:both"></div> ' + wishlistshare + ' </div>');
    if(window.localStorage['inventoryUSERID']){
     $(".iframe-jssocial-target").jsSocials({
             shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"],
@@ -2376,15 +2377,15 @@ Inventory.prototype.ShowWishlist = function(){
  // this.ShowCart();
     var itemids = [];
 
-    for (var i = $inventory.Wishlist().length - 1; i >= 0; i--) {
-       itemids.push( $inventory.Wishlist()[i].id.split("%^}")[0] );
+    for (var i = $inventoryStandard.Wishlist().length - 1; i >= 0; i--) {
+       itemids.push( $inventoryStandard.Wishlist()[i].id.split("%^}")[0] );
     };
 
     $.ajax({url:"https://orkiv.com/i/ext_js_api.php", type:"POST", data:{id:$inventoryStandard.accountid, key : this.jstoken,open: "openmanydictionary", lookup:itemids.join(",")}, success:function(html){
         var mdata = JSON.parse(html);
         var data = {result:[]};
 
-        var cartem = $inventory.Wishlist();
+        var cartem = $inventoryStandard.Wishlist();
       var added = {};
        for (var i = cartem.length - 1; i >= 0; i--) {
             
@@ -2483,7 +2484,7 @@ Inventory.prototype.ShowWishlist = function(){
                  $(".remove-from-cart" ,itemscheme).click(function(){
                 var cartitem = $(this).parents("[inventory-cartid]");
               cartitem.remove();
-                $inventory.RemoveFromWishlist(cartitem.attr("inventory-cartid") );
+                $inventoryStandard.RemoveFromWishlist(cartitem.attr("inventory-cartid") );
                
                 return false;
               });
@@ -2793,6 +2794,13 @@ Inventory.prototype.Login = function(user, callback){
                       });
 }
 
+Inventory.prototype.CategoryRaw = function(callback){
+
+	$.ajax({url : "https://orkiv.com/i/ext_epic.php/categories/?account=" + this.accountid, success:function(data){
+		console.log(data);
+	}});
+}
+
 Inventory.prototype.OneClick = function(){
       var data = this.getLocal("inventoryData",true);   
     if(data.cart.length == 0){
@@ -3003,19 +3011,19 @@ Inventory.prototype.Checkout = function() {
        this.showModal();
    $(".inv-iframe-holder-in").css('display', 'none');
    $(".inv-iframe-module").remove();
-   $(".inv-iframe-holder").append('<div class="inv-iframe-module inventory-realm" style="width:100%;background:#ededed;"><div class="column one-half cart-items"><h3><i class="fa fa-shopping-cart"></i> Items in cart</h3></div><div class="column one-half subtotal"><h2>Subtotal</h2><h1>subtotal</h1><div class="ext-oneclick"></div><p style="clear:both"><button class="update-to-oneclick u-full-width" onclick="$inventory.ShowCart()"><i class="fa fa-shopping-cart"></i> Checkout</button></p></div> <div style="clear:both"></div> </div>');
+   $(".inv-iframe-holder").append('<div class="inv-iframe-module inventory-realm" style="width:100%;background:#ededed;"><div class="column one-half cart-items"><h3><i class="fa fa-shopping-cart"></i> Items in cart</h3></div><div class="column one-half subtotal"><h2>Subtotal</h2><h1>subtotal</h1><div class="ext-oneclick"></div><p style="clear:both"><button class="update-to-oneclick u-full-width" onclick="$inventoryStandard.ShowCart()"><i class="fa fa-shopping-cart"></i> Checkout</button></p></div> <div style="clear:both"></div> </div>');
  // this.ShowCart();
     var itemids = [];
 
-    for (var i = $inventory.Cart().length - 1; i >= 0; i--) {
-       itemids.push( $inventory.Cart()[i].id.split("%^}")[0] );
+    for (var i = $inventoryStandard.Cart().length - 1; i >= 0; i--) {
+       itemids.push( $inventoryStandard.Cart()[i].id.split("%^}")[0] );
     };
 
     $.ajax({url:"https://orkiv.com/i/ext_js_api.php", type:"POST", data:{id:$inventoryStandard.accountid, key : this.jstoken,open: "openmanydictionary", lookup:itemids.join(",")}, success:function(html){
         var mdata = JSON.parse(html);
         var data = {result:[]};
 
-        var cartem = $inventory.Cart();
+        var cartem = $inventoryStandard.Cart();
       var added = {};
        for (var i = cartem.length - 1; i >= 0; i--) {
             
@@ -3156,14 +3164,14 @@ Inventory.prototype.Checkout = function() {
               $(".cart-quantity-update" ,itemscheme).change(function(){
                 var cartitem = $(this).parents("[inventory-cartid]");
                 cartitem.attr("quantity", $(this).val());
-                $inventory.UpdateCart(cartitem.attr("inventory-cartid"), parseInt( $(this).val() ) );
+                $inventoryStandard.UpdateCart(cartitem.attr("inventory-cartid"), parseInt( $(this).val() ) );
                 window["InventoryTallyCart"]();
               });
 
                  $(".remove-from-cart" ,itemscheme).click(function(){
                 var cartitem = $(this).parents("[inventory-cartid]");
               cartitem.remove();
-                $inventory.RemoveFromCart(cartitem.attr("inventory-cartid") );
+                $inventoryStandard.RemoveFromCart(cartitem.attr("inventory-cartid") );
                   window["InventoryTallyCart"]();
                  
                 return false;
