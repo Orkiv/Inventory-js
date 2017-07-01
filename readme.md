@@ -650,7 +650,7 @@ Here are some properties of an item object.
 - string id : Inventory item ID
 - int ordprice : Price in hundreds (ie : $1 = 100)
 - string tags : Item tags, separated by `,`.
-- string link : Generated Link to item.
+- string link : Generated public URL to item.
 - string quantity : Item quantity in stock.
 - array variations : Array of item variations. Here is the property list of a variation : 
 	- string id : ID of variation.
