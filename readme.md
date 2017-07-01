@@ -4,7 +4,7 @@
 
 # FULL API DOC [HERE](https://www.orkiv.com/tutorials/inventory/jsplugin/)
 
-![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/logog.png) 
+![enter image description here](https://github.com/Orkiv/Inventory-js/raw/master/DACUbxqUAAApwvf.png) 
 
 Build ecommerce websites with the `Epic commerce` toolkit
 
@@ -649,6 +649,8 @@ Here are some properties of an item object.
 - string desc : Description of item
 - string id : Inventory item ID
 - int ordprice : Price in hundreds (ie : $1 = 100)
+- string tags : Item tags, separated by `,`.
+- string link : Generated Link to item.
 - string quantity : Item quantity in stock.
 - array variations : Array of item variations. Here is the property list of a variation : 
 	- string id : ID of variation.
